@@ -7,6 +7,7 @@ interface Question {
   id: number;
   department: string;
   difficulty: string;
+  image?: string;
   question: string;
   answers: string[];
   correct: number;

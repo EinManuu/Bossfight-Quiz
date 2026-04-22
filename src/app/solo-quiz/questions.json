@@ -3,6 +3,7 @@
     "id": 1,
     "department": "IT",
     "difficulty": "easy",
+    "image": "image.png",
     "question": "What does phishing refer to?",
     "answers": [
       "Scanning a network for open ports",
@@ -17,6 +18,7 @@
     "id": 2,
     "department": "IT",
     "difficulty": "easy",
+    "image": "image.png",
     "question": "Which of the following is the strongest password?",
     "answers": [
       "password123",
@@ -31,6 +33,7 @@
     "id": 3,
     "department": "IT",
     "difficulty": "medium",
+    "image": "image.png",
     "question": "What is a zero-day vulnerability?",
     "answers": [
       "A vulnerability that has been patched within 24 hours",
@@ -45,6 +48,7 @@
     "id": 4,
     "department": "IT",
     "difficulty": "medium",
+    "image": "image.png",
     "question": "What is the purpose of multi-factor authentication (MFA)?",
     "answers": [
       "To encrypt data at rest",
@@ -59,6 +63,7 @@
     "id": 5,
     "department": "IT",
     "difficulty": "medium",
+    "image": "",
     "question": "What does a firewall primarily do?",
     "answers": [
       "Encrypts outgoing network traffic",
@@ -73,6 +78,7 @@
     "id": 6,
     "department": "IT",
     "difficulty": "hard",
+    "image": "",
     "question": "What is a man-in-the-middle (MITM) attack?",
     "answers": [
       "An attacker physically intercepting a server",
@@ -87,6 +93,7 @@
     "id": 7,
     "department": "IT",
     "difficulty": "hard",
+    "image": "",
     "question": "Which protocol is used to securely transfer files over a network?",
     "answers": [
       "FTP",
@@ -101,6 +108,7 @@
     "id": 8,
     "department": "IT",
     "difficulty": "easy",
+    "image": "",
     "question": "Which of the following best describes ransomware?",
     "answers": [
       "Software that steals browser history",
@@ -115,6 +123,7 @@
     "id": 9,
     "department": "IT",
     "difficulty": "medium",
+    "image": "",
     "question": "What is the principle of least privilege?",
     "answers": [
       "Giving all users admin access to improve productivity",
@@ -129,6 +138,7 @@
     "id": 10,
     "department": "IT",
     "difficulty": "hard",
+    "image": "",
     "question": "What does SQL injection allow an attacker to do?",
     "answers": [
       "Intercept encrypted traffic",
@@ -143,6 +153,7 @@
     "id": 11,
     "department": "Finance",
     "difficulty": "easy",
+    "image": "",
     "question": "You receive an urgent email from your CEO asking you to wire £50,000 immediately. What should you do?",
     "answers": [
       "Complete the transfer immediately as it's from the CEO",
@@ -157,6 +168,7 @@
     "id": 12,
     "department": "Finance",
     "difficulty": "easy",
+    "image": "",
     "question": "What is social engineering in a cybersecurity context?",
     "answers": [
       "Using software to hack into a network",
@@ -171,6 +183,7 @@
     "id": 13,
     "department": "Finance",
     "difficulty": "medium",
+    "image": "",
     "question": "A supplier emails to say their bank details have changed. What is the correct response?",
     "answers": [
       "Update the details immediately so payments aren't delayed",
@@ -185,6 +198,7 @@
     "id": 14,
     "department": "Finance",
     "difficulty": "medium",
+    "image": "",
     "question": "Which of the following is a sign that a financial email could be fraudulent?",
     "answers": [
       "The email was sent during business hours",
@@ -199,6 +213,7 @@
     "id": 15,
     "department": "Finance",
     "difficulty": "medium",
+    "image": "",
     "question": "What is data classification and why does it matter in Finance?",
     "answers": [
       "Organising files into folders for easy access",
@@ -213,6 +228,7 @@
     "id": 16,
     "department": "Finance",
     "difficulty": "hard",
+    "image": "",
     "question": "What regulatory framework governs how personal financial data must be handled in the UK?",
     "answers": [
       "ISO 27001",
@@ -227,6 +243,7 @@
     "id": 17,
     "department": "Finance",
     "difficulty": "hard",
+    "image": "",
     "question": "An attacker gains access to your email and monitors it silently for weeks before acting. What type of attack is this?",
     "answers": [
       "Ransomware",
@@ -241,6 +258,7 @@
     "id": 18,
     "department": "Finance",
     "difficulty": "easy",
+    "image": "",
     "question": "You are working from a coffee shop and need to access financial systems. What should you do?",
     "answers": [
       "Connect directly to the public Wi-Fi and log in as normal",
@@ -255,6 +273,7 @@
     "id": 19,
     "department": "Finance",
     "difficulty": "medium",
+    "image": "",
     "question": "What should you do if you accidentally send a financial document to the wrong person?",
     "answers": [
       "Send a follow-up email asking them to delete it and do nothing else",
@@ -269,6 +288,7 @@
     "id": 20,
     "department": "Finance",
     "difficulty": "hard",
+    "image": "",
     "question": "What is the main purpose of segregation of duties in Finance?",
     "answers": [
       "To ensure employees don't work overtime",

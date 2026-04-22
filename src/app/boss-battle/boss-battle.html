@@ -66,6 +66,9 @@
         <div class="question-area">
           <span class="difficulty-badge {{ question.difficulty }}">{{ question.difficulty }}</span>
           <h2 class="question-text">{{ question.question }}</h2>
+          @if (question.image) {
+            <img class="question-image" [src]="question.image" alt="Question image" />
+          }
         </div>
 
         <!-- Answers -->
