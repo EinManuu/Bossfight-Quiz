@@ -1,1 +1,107 @@
-<p>solo-quiz works!</p>
+<section class="quiz-page">
+  <div class="top-bar">
+    <span class="brand-mark">Q</span>
+    <strong>Quiz Arena</strong>
+  </div>
+
+  <main class="quiz-shell">
+    @if (!quizStarted && !isComplete) {
+      <section class="setup-card">
+        <div class="card-title">
+          <span class="icon-tile">Q</span>
+          <div>
+            <p class="eyebrow">Solo Quiz</p>
+            <h1>Take Quiz</h1>
+          </div>
+        </div>
+
+        <label>
+          <span>Your Name</span>
+          <input type="text" placeholder="Enter your name" [(ngModel)]="playerName" />
+        </label>
+
+        <label>
+          <span>Category</span>
+          <select [(ngModel)]="selectedCategory">
+            <option value="">Choose a category</option>
+            @for (category of categories; track category) {
+              <option [value]="category">{{ category }}</option>
+            }
+          </select>
+        </label>
+
+        @if (selectedCategory) {
+          <div class="question-count">
+            <strong>Questions:</strong>
+            <span>{{ activeQuestions.length }}</span>
+          </div>
+        }
+
+        <button type="button" class="primary-button" [disabled]="!canStartQuiz" (click)="startQuiz()">
+          Start Quiz
+        </button>
+      </section>
+    }
+
+    @if (quizStarted && !isComplete) {
+      <section class="question-card" aria-live="polite">
+        <header class="question-meta">
+          <span>{{ currentQuestionIndex + 1 }} / {{ activeQuestions.length }}</span>
+          <span class="category-pill">{{ currentQuestion.category }}</span>
+        </header>
+
+        <div class="progress" aria-label="Quiz progress">
+          <span [style.width.%]="progressPercent"></span>
+        </div>
+
+        <h1>{{ currentQuestion.prompt }}</h1>
+
+        <div class="answers">
+          @for (option of currentQuestion.options; track option; let answerIndex = $index) {
+            <button
+              type="button"
+              class="answer"
+              [class.answer--correct]="answered && answerIndex === currentQuestion.correctAnswerIndex"
+              [class.answer--wrong]="answered && answerIndex === selectedAnswerIndex && answerIndex !== currentQuestion.correctAnswerIndex"
+              [disabled]="answered"
+              (click)="selectAnswer(answerIndex)"
+            >
+              <span>{{ option }}</span>
+              @if (answered && answerIndex === currentQuestion.correctAnswerIndex) {
+                <strong>OK</strong>
+              }
+              @if (answered && answerIndex === selectedAnswerIndex && answerIndex !== currentQuestion.correctAnswerIndex) {
+                <strong>No</strong>
+              }
+            </button>
+          }
+        </div>
+
+        @if (answered) {
+          <div class="feedback" [class.feedback--success]="selectedAnswerIndex === currentQuestion.correctAnswerIndex">
+            <strong>{{ selectedAnswerIndex === currentQuestion.correctAnswerIndex ? 'Correct!' : 'Incorrect' }}</strong>
+            <p>{{ currentQuestion.explanation }}</p>
+          </div>
+        }
+
+        @if (answered) {
+          <button type="button" class="primary-button" (click)="nextQuestion()">
+            {{ currentQuestionIndex < activeQuestions.length - 1 ? 'Next Question' : 'Finish Quiz' }}
+          </button>
+        }
+
+        <p class="score-line">Score: {{ score }} / {{ currentQuestionIndex + (answered ? 1 : 0) }}</p>
+      </section>
+    }
+
+    @if (isComplete) {
+      <section class="results-card" aria-live="polite">
+        <span class="trophy-mark">T</span>
+        <h1>Quiz Complete!</h1>
+        <strong>{{ scorePercent }}%</strong>
+        <p>{{ playerName }}, you scored {{ correctCountLabel }} correct.</p>
+        <button type="button" class="result-button" (click)="retakeQuiz()">Try Again</button>
+      </section>
+    }
+  </main>
+</section>
