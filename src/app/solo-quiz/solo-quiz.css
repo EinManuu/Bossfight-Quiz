@@ -1,11 +1,10 @@
 .page {
-    height: 100vh;
+    min-height: 100vh;
     background-color: #0f1117;
     color: #e2e8f0;
     font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
 /* Header */
@@ -64,16 +63,13 @@
 
 /* Body */
 .quiz-body {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
     max-width: 720px;
     width: 100%;
     margin: 0 auto;
-    padding: 32px 24px;
+    padding: 48px 24px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 32px;
 }
 
 /* Question */
@@ -121,16 +117,6 @@
     color: #f1f5f9;
     line-height: 1.4;
     margin: 0;
-}
-
-/* Question image */
-.question-image {
-    width: 100%;
-    max-height: 200px;
-    object-fit: contain;
-    border-radius: 8px;
-    border: 1px solid #1e2740;
-    background: #161b27;
 }
 
 /* Answers */

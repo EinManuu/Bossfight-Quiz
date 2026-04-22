@@ -23,13 +23,13 @@
                 <div class="boss-hp">
                     <div class="hp-label">
                         <span>Boss HP</span>
-                        <span>{{ bossHp | number }} / {{ bossMaxHp | number }}</span>
+                        <span>6,200 / 10,000</span>
                     </div>
                     <div class="hp-track">
-                        <div class="hp-bar" [style.width.%]="bossHpPercent"></div>
+                        <div class="hp-bar" style="width: 62%"></div>
                     </div>
                 </div>
-                <button mat-flat-button class="join-btn" (click)="goToBossBattle()">Join the Battle</button>
+                <button mat-flat-button class="join-btn">Join the Battle</button>
             </div>
             <div class="hero-visual">
                 <div class="boss-icon">&#128128;</div>
@@ -80,7 +80,7 @@
                     <p>Compare your score against colleagues. Department rankings updated weekly.</p>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-flat-button (click)="goToLeaderboard()">View</button>
+                    <button mat-flat-button>View</button>
                 </mat-card-actions>
             </mat-card>
 

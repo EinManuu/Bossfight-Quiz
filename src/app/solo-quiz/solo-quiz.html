@@ -17,27 +17,28 @@
 <!-- Quiz screen -->
 @if (state !== 'results') {
   <div class="page">
+    <!-- Header -->
     <header class="quiz-header">
       <button class="back-btn" (click)="goHome()">&#8592; Home</button>
       <span class="quiz-label">Solo Quiz</span>
       <span class="score-pill">{{ score }} / {{ questions.length }}</span>
     </header>
 
+    <!-- Progress -->
     <div class="progress-track">
       <div class="progress-bar" [style.width.%]="progress"></div>
     </div>
 
     @if (questions.length > 0) {
       <div class="quiz-body">
+        <!-- Question -->
         <div class="question-area">
           <span class="question-count">Question {{ current + 1 }} of {{ questions.length }}</span>
           <span class="difficulty-badge {{ question.difficulty }}">{{ question.difficulty }}</span>
           <h2 class="question-text">{{ question.question }}</h2>
-          @if (question.image) {
-            <img class="question-image" [src]="question.image" alt="Question image" />
-          }
         </div>
 
+        <!-- Answers -->
         <div class="answers">
           @for (answer of question.answers; track $index) {
             <button
@@ -52,6 +53,7 @@
           }
         </div>
 
+        <!-- Feedback -->
         @if (state === 'feedback') {
           <div class="feedback" [class.feedback-correct]="selected === question.correct" [class.feedback-wrong]="selected !== question.correct">
             <p class="feedback-verdict">{{ selected === question.correct ? '✓ Correct!' : '✗ Incorrect' }}</p>
