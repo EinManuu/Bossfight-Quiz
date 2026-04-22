@@ -64,8 +64,18 @@ export class SoloQuiz implements OnInit {
       this.selected = null;
       this.state = 'question';
     } else {
+      this.saveScore();
       this.state = 'results';
     }
+  }
+
+  private saveScore() {
+    const username = localStorage.getItem('username') ?? '';
+    if (!username) return;
+    const key = `score_${username}`;
+    const existing = JSON.parse(localStorage.getItem(key) ?? '{"quizPoints":0,"bossDamage":0}');
+    existing.quizPoints += this.xpEarned;
+    localStorage.setItem(key, JSON.stringify(existing));
   }
 
   restart() {
