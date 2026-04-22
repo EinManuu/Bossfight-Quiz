@@ -1,1 +1,69 @@
-<p>solo-quiz works!</p>
+<!-- Results screen -->
+@if (state === 'results') {
+  <div class="page">
+    <div class="results-card">
+      <div class="results-icon">{{ score >= 8 ? '🏆' : score >= 5 ? '⭐' : '💀' }}</div>
+      <h1 class="results-title">{{ score >= 8 ? 'Excellent work!' : score >= 5 ? 'Not bad!' : 'Keep training.' }}</h1>
+      <p class="results-sub">You scored {{ score }} out of {{ questions.length }}</p>
+      <div class="xp-badge">+{{ xpEarned }} XP earned</div>
+      <div class="results-actions">
+        <button class="btn-primary" (click)="restart()">Play Again</button>
+        <button class="btn-ghost" (click)="goHome()">Back to Home</button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Quiz screen -->
+@if (state !== 'results') {
+  <div class="page">
+    <!-- Header -->
+    <header class="quiz-header">
+      <button class="back-btn" (click)="goHome()">&#8592; Home</button>
+      <span class="quiz-label">Solo Quiz</span>
+      <span class="score-pill">{{ score }} / {{ questions.length }}</span>
+    </header>
+
+    <!-- Progress -->
+    <div class="progress-track">
+      <div class="progress-bar" [style.width.%]="progress"></div>
+    </div>
+
+    @if (questions.length > 0) {
+      <div class="quiz-body">
+        <!-- Question -->
+        <div class="question-area">
+          <span class="question-count">Question {{ current + 1 }} of {{ questions.length }}</span>
+          <span class="difficulty-badge {{ question.difficulty }}">{{ question.difficulty }}</span>
+          <h2 class="question-text">{{ question.question }}</h2>
+        </div>
+
+        <!-- Answers -->
+        <div class="answers">
+          @for (answer of question.answers; track $index) {
+            <button
+              class="answer-btn"
+              [class.correct]="state === 'feedback' && $index === question.correct"
+              [class.wrong]="state === 'feedback' && $index === selected && selected !== question.correct"
+              [class.dimmed]="state === 'feedback' && $index !== selected && $index !== question.correct"
+              (click)="select($index)">
+              <span class="answer-letter">{{ ['A', 'B', 'C', 'D'][$index] }}</span>
+              <span>{{ answer }}</span>
+            </button>
+          }
+        </div>
+
+        <!-- Feedback -->
+        @if (state === 'feedback') {
+          <div class="feedback" [class.feedback-correct]="selected === question.correct" [class.feedback-wrong]="selected !== question.correct">
+            <p class="feedback-verdict">{{ selected === question.correct ? '✓ Correct!' : '✗ Incorrect' }}</p>
+            <p class="feedback-explanation">{{ question.explanation }}</p>
+            <button class="btn-primary" (click)="next()">
+              {{ current < questions.length - 1 ? 'Next Question' : 'See Results' }}
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
