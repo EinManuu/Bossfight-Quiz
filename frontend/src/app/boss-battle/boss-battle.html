@@ -33,6 +33,17 @@
 @if (state === 'question' || state === 'feedback') {
 <div class="page" [class.boss-attacking]="bossAttacking">
 
+  @if (bossDefeated) {
+  <div class="defeated-overlay">
+    <div class="defeated-card">
+      <div class="defeated-icon">💀</div>
+      <h2 class="defeated-title">Boss Defeated!</h2>
+      <p class="defeated-sub">Another player dealt the killing blow. The threat has been neutralised.</p>
+      <button class="btn-primary" (click)="goHome()">Back to Base</button>
+    </div>
+  </div>
+  }
+
   <!-- Header -->
   <header class="battle-header">
     <button class="back-btn" (click)="goHome()">&#8592; Retreat</button>

@@ -29,7 +29,9 @@
                         <div class="hp-bar" [style.width.%]="bossHpPercent"></div>
                     </div>
                 </div>
-                <button mat-flat-button class="join-btn" (click)="goToBossBattle()">Join the Battle</button>
+                <button mat-flat-button class="join-btn" (click)="goToBossBattle()" [disabled]="bossHp === 0">
+                  {{ bossHp === 0 ? 'Boss Defeated' : 'Join the Battle' }}
+                </button>
             </div>
           <div class="hero-visual">
             @if (bossHp>0) {
