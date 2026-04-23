@@ -57,7 +57,7 @@ def register_view(request):
             'access': str(refresh.access_token),
             'username': user.username,
             'role': role,
-            'message': 'User created successfully. Your password is bip2026.',
+            'message': 'User created successfully.',
         },
         status=status.HTTP_201_CREATED,
     )
