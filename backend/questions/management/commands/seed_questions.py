@@ -1,0 +1,159 @@
+from django.core.management.base import BaseCommand
+from questions.models import Question
+
+QUESTIONS = [
+    {
+        "department": "IT", "difficulty": "easy", "image": "image.png",
+        "question": "What does phishing refer to?",
+        "answers": ["Scanning a network for open ports", "Tricking users into revealing credentials via fake communications", "Encrypting files on a target machine", "Brute-forcing a login page"],
+        "correct": 1,
+        "explanation": "Phishing uses deceptive emails or websites to trick users into handing over sensitive information like passwords or credit card numbers.",
+    },
+    {
+        "department": "IT", "difficulty": "easy", "image": "image.png",
+        "question": "Which of the following is the strongest password?",
+        "answers": ["password123", "P@ssw0rd", "qX7$mK!2vL#9", "MyDogIsNamedMax"],
+        "correct": 2,
+        "explanation": "A strong password uses a mix of upper and lowercase letters, numbers, and symbols with no recognisable words or patterns.",
+    },
+    {
+        "department": "IT", "difficulty": "medium", "image": "image.png",
+        "question": "What is a zero-day vulnerability?",
+        "answers": ["A vulnerability that has been patched within 24 hours", "A flaw exploited before the vendor is aware or has issued a fix", "A server that has never been updated", "A virus that deletes files on the day it runs"],
+        "correct": 1,
+        "explanation": "A zero-day vulnerability is a flaw unknown to the software vendor, meaning there are zero days of protection — patches don't exist yet.",
+    },
+    {
+        "department": "IT", "difficulty": "medium", "image": "image.png",
+        "question": "What is the purpose of multi-factor authentication (MFA)?",
+        "answers": ["To encrypt data at rest", "To require multiple steps when setting a password", "To verify identity using more than one type of credential", "To block access from foreign IP addresses"],
+        "correct": 2,
+        "explanation": "MFA requires at least two forms of verification (e.g. password + phone code), making it much harder for attackers to access an account even if one factor is compromised.",
+    },
+    {
+        "department": "IT", "difficulty": "medium", "image": "",
+        "question": "What does a firewall primarily do?",
+        "answers": ["Encrypts outgoing network traffic", "Monitors and filters network traffic based on rules", "Backs up data to a remote server", "Detects malware in downloaded files"],
+        "correct": 1,
+        "explanation": "A firewall controls incoming and outgoing network traffic by applying defined security rules, acting as a barrier between trusted and untrusted networks.",
+    },
+    {
+        "department": "IT", "difficulty": "hard", "image": "",
+        "question": "What is a man-in-the-middle (MITM) attack?",
+        "answers": ["An attacker physically intercepting a server", "An attacker secretly relaying or altering communication between two parties", "A brute-force attack on a database", "An insider threat from a disgruntled employee"],
+        "correct": 1,
+        "explanation": "In a MITM attack, the attacker secretly positions themselves between two communicating parties, able to eavesdrop or alter the data being exchanged.",
+    },
+    {
+        "department": "IT", "difficulty": "hard", "image": "",
+        "question": "Which protocol is used to securely transfer files over a network?",
+        "answers": ["FTP", "HTTP", "SFTP", "SMTP"],
+        "correct": 2,
+        "explanation": "SFTP (SSH File Transfer Protocol) encrypts both the commands and data, unlike plain FTP which transmits everything including credentials in cleartext.",
+    },
+    {
+        "department": "IT", "difficulty": "easy", "image": "",
+        "question": "Which of the following best describes ransomware?",
+        "answers": ["Software that steals browser history", "A virus that slows down your computer", "Malware that encrypts your files and demands payment to restore them", "A tool used by IT teams to recover lost data"],
+        "correct": 2,
+        "explanation": "Ransomware encrypts a victim's files and demands a ransom payment in exchange for the decryption key. It can affect individuals and entire organisations.",
+    },
+    {
+        "department": "IT", "difficulty": "medium", "image": "",
+        "question": "What is the principle of least privilege?",
+        "answers": ["Giving all users admin access to improve productivity", "Restricting user access rights to only what is needed for their role", "Logging out of systems when not in use", "Using the cheapest available security software"],
+        "correct": 1,
+        "explanation": "The principle of least privilege limits each user or system to the minimum level of access needed, reducing the potential damage from breaches or mistakes.",
+    },
+    {
+        "department": "IT", "difficulty": "hard", "image": "",
+        "question": "What does SQL injection allow an attacker to do?",
+        "answers": ["Intercept encrypted traffic", "Crash a web server remotely", "Manipulate or extract data from a database by injecting malicious SQL code", "Install a keylogger on a target machine"],
+        "correct": 2,
+        "explanation": "SQL injection inserts malicious SQL statements into input fields, which the database then executes — potentially exposing, modifying, or deleting data.",
+    },
+    {
+        "department": "Finance", "difficulty": "easy", "image": "",
+        "question": "You receive an urgent email from your CEO asking you to wire £50,000 immediately. What should you do?",
+        "answers": ["Complete the transfer immediately as it's from the CEO", "Reply to the email asking for more details", "Verify the request through a separate, known communication channel before acting", "Forward it to a colleague to handle"],
+        "correct": 2,
+        "explanation": "CEO fraud (also called Business Email Compromise) is common in Finance. Always verify large transfer requests through a known phone number or in person — never via the same email chain.",
+    },
+    {
+        "department": "Finance", "difficulty": "easy", "image": "",
+        "question": "What is social engineering in a cybersecurity context?",
+        "answers": ["Using software to hack into a network", "Manipulating people into divulging confidential information", "Building a company's social media presence", "Installing monitoring software on employee computers"],
+        "correct": 1,
+        "explanation": "Social engineering exploits human psychology rather than technical vulnerabilities — attackers manipulate people into revealing information or taking harmful actions.",
+    },
+    {
+        "department": "Finance", "difficulty": "medium", "image": "",
+        "question": "A supplier emails to say their bank details have changed. What is the correct response?",
+        "answers": ["Update the details immediately so payments aren't delayed", "Call the supplier on a previously verified number to confirm the change", "Reply to the email asking them to confirm", "Check if the email address looks correct and proceed if it does"],
+        "correct": 1,
+        "explanation": "Invoice redirect fraud is a major threat to Finance teams. Always verify bank detail changes via a trusted phone number you already have — not one provided in the suspicious email.",
+    },
+    {
+        "department": "Finance", "difficulty": "medium", "image": "",
+        "question": "Which of the following is a sign that a financial email could be fraudulent?",
+        "answers": ["The email was sent during business hours", "The email creates a sense of urgency and asks you to bypass normal procedures", "The email is addressed to you by name", "The email comes from a known domain"],
+        "correct": 1,
+        "explanation": "Urgency and pressure to skip normal approval steps are classic red flags of fraud. Legitimate requests rarely require you to bypass standard controls.",
+    },
+    {
+        "department": "Finance", "difficulty": "medium", "image": "",
+        "question": "What is data classification and why does it matter in Finance?",
+        "answers": ["Organising files into folders for easy access", "Labelling data by sensitivity to ensure it is handled and protected appropriately", "Encrypting all company spreadsheets automatically", "Backing up financial records to the cloud"],
+        "correct": 1,
+        "explanation": "Data classification helps Finance teams understand which data (e.g. payroll, account numbers) is sensitive and requires stricter access controls and handling procedures.",
+    },
+    {
+        "department": "Finance", "difficulty": "hard", "image": "",
+        "question": "What regulatory framework governs how personal financial data must be handled in the UK?",
+        "answers": ["ISO 27001", "PCI DSS", "UK GDPR", "SOX"],
+        "correct": 2,
+        "explanation": "UK GDPR (General Data Protection Regulation) sets out how personal data, including financial data, must be collected, stored, and processed. Violations can result in significant fines.",
+    },
+    {
+        "department": "Finance", "difficulty": "hard", "image": "",
+        "question": "An attacker gains access to your email and monitors it silently for weeks before acting. What type of attack is this?",
+        "answers": ["Ransomware", "Denial of Service", "Business Email Compromise (BEC)", "SQL Injection"],
+        "correct": 2,
+        "explanation": "BEC attackers often lurk in email accounts for extended periods, learning communication patterns and waiting for the right moment to redirect payments or extract data.",
+    },
+    {
+        "department": "Finance", "difficulty": "easy", "image": "",
+        "question": "You are working from a coffee shop and need to access financial systems. What should you do?",
+        "answers": ["Connect directly to the public Wi-Fi and log in as normal", "Wait until you're on a trusted network or use a company VPN", "Use your personal hotspot only if the public Wi-Fi seems slow", "Access the system quickly to minimise exposure time"],
+        "correct": 1,
+        "explanation": "Public Wi-Fi is not secure. Always use a company-approved VPN when accessing sensitive systems remotely to encrypt your connection.",
+    },
+    {
+        "department": "Finance", "difficulty": "medium", "image": "",
+        "question": "What should you do if you accidentally send a financial document to the wrong person?",
+        "answers": ["Send a follow-up email asking them to delete it and do nothing else", "Ignore it as it was an honest mistake", "Report it to your manager and the IT/security team immediately", "Ask the recipient to send it back"],
+        "correct": 2,
+        "explanation": "Accidental data disclosure is a reportable incident under UK GDPR. Prompt reporting gives the organisation the best chance to contain the damage and meet its legal obligations.",
+    },
+    {
+        "department": "Finance", "difficulty": "hard", "image": "",
+        "question": "What is the main purpose of segregation of duties in Finance?",
+        "answers": ["To ensure employees don't work overtime", "To prevent any single person from having enough control to commit and conceal fraud", "To divide financial reports between departments", "To speed up payment approvals"],
+        "correct": 1,
+        "explanation": "Segregation of duties is a key internal control that splits responsibilities (e.g. approving vs. processing payments) so no single individual can both execute and conceal a fraudulent transaction.",
+    },
+]
+
+
+class Command(BaseCommand):
+    help = 'Seed the questions table with the initial 20 questions'
+
+    def handle(self, *args, **options):
+        if Question.objects.exists():
+            self.stdout.write('Questions already exist, skipping seed.')
+            return
+
+        for data in QUESTIONS:
+            Question.objects.create(**data)
+
+        self.stdout.write(self.style.SUCCESS(f'Created {len(QUESTIONS)} questions.'))

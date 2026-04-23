@@ -1,0 +1,10 @@
+[
+  { "username": "jsmith",    "role": "Finance", "quizPoints": 210, "bossDamage": 850 },
+  { "username": "aparker",   "role": "IT",      "quizPoints": 290, "bossDamage": 1200 },
+  { "username": "mthompson", "role": "IT",      "quizPoints": 180, "bossDamage": 600 },
+  { "username": "lchang",    "role": "Finance", "quizPoints": 130, "bossDamage": 400 },
+  { "username": "rnguyen",   "role": "IT",      "quizPoints": 260, "bossDamage": 950 },
+  { "username": "sbrown",    "role": "Finance", "quizPoints": 90,  "bossDamage": 300 },
+  { "username": "IT",        "role": "IT",      "quizPoints": 0,   "bossDamage": 0 },
+  { "username": "Finance",   "role": "Finance", "quizPoints": 0,   "bossDamage": 0 }
+]

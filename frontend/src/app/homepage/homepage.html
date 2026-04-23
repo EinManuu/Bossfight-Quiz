@@ -1,0 +1,90 @@
+<div class="page">
+
+    <!-- Top nav -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">&#9876;</span>
+            <span class="brand-name">CyberForce</span>
+        </div>
+        <div class="nav-right">
+            <span class="role-badge">{{ role }}</span>
+            <span class="username">{{ username }}</span>
+            <button class="logout-btn" (click)="logout()">Logout</button>
+        </div>
+    </header>
+
+    <!-- Hero: Boss Battle -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <mat-chip class="event-chip">&#128293; Live Event</mat-chip>
+                <h1 class="hero-title">Operation: <span class="threat">{{ bossName }}</span></h1>
+                <p class="hero-sub">{{ bossDescription }}</p>
+                <div class="boss-hp">
+                    <div class="hp-label">
+                        <span>Boss HP</span>
+                        <span>{{ bossHp | number }} / {{ bossMaxHp | number }}</span>
+                    </div>
+                    <div class="hp-track">
+                        <div class="hp-bar" [style.width.%]="bossHpPercent"></div>
+                    </div>
+                </div>
+                <button mat-flat-button class="join-btn" (click)="goToBossBattle()">Join the Battle</button>
+            </div>
+            <div class="hero-visual">
+                <div class="boss-icon">&#128128;</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game modes -->
+    <section class="modes">
+        <h2 class="section-title">Game Modes</h2>
+        <div class="cards">
+
+            <mat-card class="mode-card">
+                <div class="card-icon solo-icon">&#9733;</div>
+                <mat-card-header>
+                    <mat-card-title>Solo Quiz</mat-card-title>
+                    <mat-card-subtitle>Train at your own pace</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>Answer questions tailored to your department. Earn XP and climb the leaderboard.</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button (click)="goToSoloQuiz()">Play</button>
+                </mat-card-actions>
+            </mat-card>
+
+            <mat-card class="mode-card">
+                <div class="card-icon study-icon">&#128218;</div>
+                <mat-card-header>
+                    <mat-card-title>Study Zone</mat-card-title>
+                    <mat-card-subtitle>Learn before you fight</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>Review cybersecurity topics relevant to your role before jumping into quizzes.</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button (click)="goToStudyZone()">Study</button>
+                </mat-card-actions>
+            </mat-card>
+
+            <mat-card class="mode-card">
+                <div class="card-icon lb-icon">&#127942;</div>
+                <mat-card-header>
+                    <mat-card-title>Leaderboard</mat-card-title>
+                    <mat-card-subtitle>See how you rank</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>Compare your score against colleagues. Department rankings updated weekly.</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button (click)="goToLeaderboard()">View</button>
+                </mat-card-actions>
+            </mat-card>
+
+        </div>
+    </section>
+
+</div>

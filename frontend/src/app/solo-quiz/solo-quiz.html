@@ -1,0 +1,101 @@
+<!-- Level-up screen -->
+@if (state === 'levelup') {
+  <div class="page">
+    <div class="levelup-card">
+      <div class="results-icon">&#11014;</div>
+      <h1 class="results-title">Level Up!</h1>
+      <p class="results-sub">You reached <strong>Level {{ newLevel }}</strong>. Choose your upgrade:</p>
+      <div class="upgrade-options">
+        <button class="upgrade-card" (click)="chooseUpgrade('power')">
+          <span class="upgrade-icon">&#9876;</span>
+          <span class="upgrade-name">Power Strike</span>
+          <span class="upgrade-desc">+50% damage in boss battles</span>
+        </button>
+        <button class="upgrade-card" (click)="chooseUpgrade('exploit')">
+          <span class="upgrade-icon">&#128163;</span>
+          <span class="upgrade-name">Exploit Chain</span>
+          <span class="upgrade-desc">+200 flat damage per correct answer</span>
+        </button>
+        <button class="upgrade-card" (click)="chooseUpgrade('zeroday')">
+          <span class="upgrade-icon">&#128293;</span>
+          <span class="upgrade-name">Zero-Day</span>
+          <span class="upgrade-desc">Hard questions deal double damage</span>
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Results screen -->
+@if (state === 'results') {
+  <div class="page">
+    <div class="results-card">
+      <div class="results-icon">{{ score >= 8 ? '🏆' : score >= 5 ? '⭐' : '💀' }}</div>
+      <h1 class="results-title">{{ score >= 8 ? 'Excellent work!' : score >= 5 ? 'Not bad!' : 'Keep training.' }}</h1>
+      <p class="results-sub">You scored {{ score }} out of {{ questions.length }}</p>
+      <div class="xp-badge">+{{ xpEarned }} XP earned</div>
+      <div class="results-actions">
+        <button class="btn-primary" (click)="restart()">Play Again</button>
+        <button class="btn-ghost" (click)="goHome()">Back to Home</button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Quiz screen -->
+@if (state === 'question' || state === 'feedback') {
+  <div class="page">
+    <header class="quiz-header">
+      <button class="back-btn" (click)="goHome()">&#8592; Home</button>
+      <span class="quiz-label">Solo Quiz</span>
+      <span class="score-pill">{{ score }} / {{ questions.length }}</span>
+    </header>
+
+    <div class="progress-track">
+      <div class="progress-bar" [style.width.%]="progress"></div>
+    </div>
+
+    @if (loading) {
+      <div class="quiz-body" style="display:flex;align-items:center;justify-content:center;height:60vh">
+        <p style="color:#888;font-size:1.1rem">Loading questions…</p>
+      </div>
+    }
+
+    @if (!loading && questions.length > 0) {
+      <div class="quiz-body">
+        <div class="question-area">
+          <span class="question-count">Question {{ current + 1 }} of {{ questions.length }}</span>
+          <span class="difficulty-badge {{ question.difficulty }}">{{ question.difficulty }}</span>
+          <h2 class="question-text">{{ question.question }}</h2>
+          @if (question.image) {
+            <img class="question-image" [src]="question.image" alt="Question image" />
+          }
+        </div>
+
+        <div class="answers">
+          @for (answer of question.answers; track $index) {
+            <button
+              class="answer-btn"
+              [class.correct]="state === 'feedback' && $index === question.correct"
+              [class.wrong]="state === 'feedback' && $index === selected && selected !== question.correct"
+              [class.dimmed]="state === 'feedback' && $index !== selected && $index !== question.correct"
+              (click)="select($index)">
+              <span class="answer-letter">{{ ['A', 'B', 'C', 'D'][$index] }}</span>
+              <span>{{ answer }}</span>
+            </button>
+          }
+        </div>
+
+        @if (state === 'feedback') {
+          <div class="feedback" [class.feedback-correct]="selected === question.correct" [class.feedback-wrong]="selected !== question.correct">
+            <p class="feedback-verdict">{{ selected === question.correct ? '✓ Correct!' : '✗ Incorrect' }}</p>
+            <p class="feedback-explanation">{{ question.explanation }}</p>
+            <button class="btn-primary" (click)="next()">
+              {{ current < questions.length - 1 ? 'Next Question' : 'See Results' }}
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
