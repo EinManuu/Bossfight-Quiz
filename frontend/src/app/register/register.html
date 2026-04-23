@@ -18,6 +18,14 @@
                 <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Enter a username" autocomplete="username" />
             </div>
 
+            <div class="field">
+                <label for="role">Department</label>
+                <select id="role" name="role" [(ngModel)]="role">
+                    <option value="IT">IT</option>
+                    <option value="Finance">Finance</option>
+                </select>
+            </div>
+
             @if (message) {
                 <p class="success">{{ message }}</p>
             }

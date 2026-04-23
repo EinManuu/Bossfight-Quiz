@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionsService, Question } from '../questions.service';
 import { ScoresService } from '../scores.service';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 type QuizState = 'question' | 'feedback' | 'results' | 'levelup';
 
@@ -41,15 +43,7 @@ export class SoloQuiz implements OnInit {
   ) {}
 
   ngOnInit() {
-    const role = localStorage.getItem('role') ?? '';
-    this.questionsService.getByDepartment(role).subscribe({
-      next: (all) => {
-        this.questions = this.shuffle(all).slice(0, 10);
-        this.loading = false;
-        this.cdr.detectChanges();
-      },
-      error: () => this.router.navigate(['/home']),
-    });
+    this.loadQuestions();
   }
 
   select(index: number) {
@@ -107,27 +101,76 @@ export class SoloQuiz implements OnInit {
   }
 
   restart() {
-    const role = localStorage.getItem('role') ?? '';
-    this.loading = true;
-    this.questionsService.getByDepartment(role).subscribe({
-      next: (all) => {
-        this.questions = this.shuffle(all).slice(0, 10);
-        this.current = 0;
-        this.selected = null;
-        this.score = 0;
-        this.state = 'question';
-        this.loading = false;
-        this.cdr.detectChanges();
-      },
-      error: () => this.router.navigate(['/home']),
-    });
+    this.loadQuestions();
   }
 
   goHome() {
     this.router.navigate(['/home']);
   }
 
+  goToLearningModule() {
+    const topicId = this.getLearningTopicId();
+    if (!topicId) {
+      window.location.href = 'http://localhost:4200/study-zone';
+      return;
+    }
+
+    this.router.navigate(['/study-zone'], {
+      queryParams: { topic: topicId },
+    });
+  }
+
+  hasLearningModule(): boolean {
+    return this.getLearningTopicId() !== null;
+  }
+
   private shuffle<T>(arr: T[]): T[] {
     return [...arr].sort(() => Math.random() - 0.5);
+  }
+
+  private loadQuestions() {
+    const role = localStorage.getItem('role') ?? '';
+    this.loading = true;
+
+    this.questionsService
+      .getByDepartment(role)
+      .pipe(switchMap((all) => (all.length ? of(all) : this.questionsService.getAll())))
+      .subscribe({
+        next: (all) => {
+          this.questions = this.shuffle(all).slice(0, 10);
+          this.current = 0;
+          this.selected = null;
+          this.score = 0;
+          this.state = 'question';
+          this.loading = false;
+          this.cdr.detectChanges();
+        },
+        error: () => this.router.navigate(['/home']),
+      });
+  }
+
+  private getLearningTopicId(): string | null {
+    if (!this.question) return null;
+
+    const text = `${this.question.question} ${this.question.explanation}`.toLowerCase();
+
+    const topicKeywords: Record<string, string[]> = {
+      phishing: ['phishing', 'fake communications', 'fake email', 'spear phishing', 'whaling', 'smishing', 'vishing'],
+      'social-engineering': ['social engineering', 'manipulating people', 'psychology', 'ceo fraud', 'business email compromise', 'bec'],
+      ransomware: ['ransomware', 'encrypts your files', 'decryption key', 'malware that encrypts'],
+      'password-attacks': ['password', 'credential stuffing', 'password spraying', 'brute-force', 'brute force', 'mfa'],
+      'man-in-the-middle': ['man-in-the-middle', 'mitm', 'intercept', 'public wi-fi', 'public wifi', 'vpn'],
+      'insider-threats': ['insider', 'least privilege', 'segregation of duties', 'access rights', 'compromised insider'],
+      'physical-access': ['physical', 'tailgating', 'shoulder surfing', 'badge', 'restricted area'],
+      'removable-media': ['usb', 'removable media', 'external drive'],
+    };
+
+    for (const [topicId, keywords] of Object.entries(topicKeywords)) {
+      if (keywords.some((keyword) => text.includes(keyword))) {
+        return topicId;
+      }
+    }
+
+    return null;
   }
 }
