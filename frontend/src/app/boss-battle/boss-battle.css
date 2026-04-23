@@ -400,3 +400,20 @@
 
     .btn-primary { width: 100%; text-align: center; }
 }
+
+.damage-pop {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f87171;
+  animation: floatUp 1.2s ease-out forwards;
+}
+
+.damage-pop.heal {
+  color: #4ade80;
+}
+
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-40px); }
+}

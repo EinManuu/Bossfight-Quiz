@@ -1,111 +1,112 @@
 <!-- Loading -->
 @if (state === 'loading') {
-  <div class="page" style="display:flex;align-items:center;justify-content:center;height:100vh">
-    <p style="color:#888;font-size:1.1rem">Entering battle…</p>
-  </div>
+<div class="page" style="display:flex;align-items:center;justify-content:center;height:100vh">
+  <p style="color:#888;font-size:1.1rem">Entering battle…</p>
+</div>
 }
 
 <!-- Results -->
 @if (state === 'results') {
-  <div class="page">
-    <div class="results-card">
-      <div class="results-icon">{{ sessionDamage >= 1500 ? '💥' : sessionDamage >= 800 ? '⚔️' : '🛡️' }}</div>
-      <h1 class="results-title">Battle complete!</h1>
-      <p class="results-sub">You dealt <span class="dmg-highlight">{{ sessionDamage }}</span> damage to the boss</p>
-      <div class="boss-hp-mini">
-        <div class="hp-label">
-          <span>Boss HP remaining</span>
-          <span>{{ bossHp | number }} / {{ bossMaxHp | number }}</span>
-        </div>
-        <div class="hp-track">
-          <div class="hp-bar" [style.width.%]="bossHpPercent"></div>
-        </div>
+<div class="page">
+  <div class="results-card">
+    <div class="results-icon">{{ sessionDamage >= 1500 ? '💥' : sessionDamage >= 800 ? '⚔️' : '🛡️' }}</div>
+    <h1 class="results-title">Battle complete!</h1>
+    <p class="results-sub">You dealt <span class="dmg-highlight">{{ sessionDamage }}</span> damage to the boss</p>
+    <div class="boss-hp-mini">
+      <div class="hp-label">
+        <span>Boss HP remaining</span>
+        <span>{{ bossHp | number }} / {{ bossMaxHp | number }}</span>
       </div>
-      <div class="xp-badge">+{{ sessionDamage }} boss damage logged</div>
-      <div class="results-actions">
-        <button class="btn-primary" (click)="goHome()">Back to Base</button>
+      <div class="hp-track">
+        <div class="hp-bar" [style.width.%]="bossHpPercent"></div>
       </div>
     </div>
+    <div class="xp-badge">+{{ sessionDamage }} boss damage logged</div>
+    <div class="results-actions">
+      <button class="btn-primary" (click)="goHome()">Back to Base</button>
+    </div>
   </div>
+</div>
 }
 
 <!-- Battle -->
 @if (state === 'question' || state === 'feedback') {
-  <div class="page" [class.boss-attacking]="bossAttacking">
+<div class="page" [class.boss-attacking]="bossAttacking">
 
-    <!-- Header -->
-    <header class="battle-header">
-      <button class="back-btn" (click)="goHome()">&#8592; Retreat</button>
-      <span class="event-label">&#128293; Boss Battle</span>
-      <span class="q-counter">{{ current + 1 }} / {{ questions.length }}</span>
-    </header>
+  <!-- Header -->
+  <header class="battle-header">
+    <button class="back-btn" (click)="goHome()">&#8592; Retreat</button>
+    <span class="event-label">&#128293; Boss Battle</span>
+    <span class="q-counter">{{ current + 1 }} / {{ questions.length }}</span>
+  </header>
 
-    <!-- Boss section -->
-    <div class="boss-section">
-      <div class="boss-icon">&#128128;</div>
+  <!-- Boss section -->
+  <div class="boss-section">
+    <div class="boss-icon">&#128128;</div>
 
-      @if (showDamage) {
-        <div class="damage-pop">-{{ lastHit }}</div>
+    @if (showDamage) {
+    <div class="damage-pop" [class.heal]="isHeal">
+      {{ isHeal ? '+' : '-' }}{{ lastHit }}
+    </div>
+    }
+
+    <div class="boss-hp-bar">
+      <div class="hp-meta">
+        <span class="boss-name">{{ bossName }}</span>
+        <span class="hp-numbers">{{ bossHp | number }} / {{ bossMaxHp | number }}</span>
+      </div>
+      <div class="hp-track">
+        <div class="hp-fill" [style.width.%]="bossHpPercent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer -->
+  <div class="timer-row">
+    <div class="timer-track">
+      <div class="timer-fill" [style.width.%]="timerPercent" [style.background]="timerColor"></div>
+    </div>
+    <span class="timer-num" [style.color]="timerColor">{{ timer }}s</span>
+  </div>
+
+  @if (questions.length > 0) {
+  <div class="battle-body">
+    <!-- Question -->
+    <div class="question-area">
+      <span class="difficulty-badge {{ question.difficulty }}">{{ question.difficulty }}</span>
+      <h2 class="question-text">{{ question.question }}</h2>
+      @if (question.image) {
+      <img class="question-image" [src]="question.image" alt="Question image" />
       }
-
-      <div class="boss-hp-bar">
-        <div class="hp-meta">
-          <span class="boss-name">{{ bossName }}</span>
-          <span class="hp-numbers">{{ bossHp | number }} / {{ bossMaxHp | number }}</span>
-        </div>
-        <div class="hp-track">
-          <div class="hp-fill" [style.width.%]="bossHpPercent"></div>
-        </div>
-      </div>
     </div>
 
-    <!-- Timer -->
-    <div class="timer-row">
-      <div class="timer-track">
-        <div class="timer-fill" [style.width.%]="timerPercent" [style.background]="timerColor"></div>
-      </div>
-      <span class="timer-num" [style.color]="timerColor">{{ timer }}s</span>
+    <!-- Answers -->
+    <div class="answers">
+      @for (answer of question.answers; track $index) {
+      <button class="answer-btn" [class.correct]="state === 'feedback' && $index === question.correct"
+        [class.wrong]="state === 'feedback' && $index === selected && selected !== question.correct"
+        [class.dimmed]="state === 'feedback' && $index !== selected && $index !== question.correct"
+        (click)="select($index)">
+        <span class="answer-letter">{{ ['A','B','C','D'][$index] }}</span>
+        <span>{{ answer }}</span>
+      </button>
+      }
     </div>
 
-    @if (questions.length > 0) {
-      <div class="battle-body">
-        <!-- Question -->
-        <div class="question-area">
-          <span class="difficulty-badge {{ question.difficulty }}">{{ question.difficulty }}</span>
-          <h2 class="question-text">{{ question.question }}</h2>
-          @if (question.image) {
-            <img class="question-image" [src]="question.image" alt="Question image" />
-          }
-        </div>
-
-        <!-- Answers -->
-        <div class="answers">
-          @for (answer of question.answers; track $index) {
-            <button
-              class="answer-btn"
-              [class.correct]="state === 'feedback' && $index === question.correct"
-              [class.wrong]="state === 'feedback' && $index === selected && selected !== question.correct"
-              [class.dimmed]="state === 'feedback' && $index !== selected && $index !== question.correct"
-              (click)="select($index)">
-              <span class="answer-letter">{{ ['A','B','C','D'][$index] }}</span>
-              <span>{{ answer }}</span>
-            </button>
-          }
-        </div>
-
-        <!-- Feedback -->
-        @if (state === 'feedback') {
-          <div class="feedback" [class.feedback-correct]="selected === question.correct" [class.feedback-wrong]="selected !== question.correct">
-            <p class="feedback-verdict">
-              {{ selected === question.correct ? '✓ Hit! -' + lastHit + ' HP' : selected === -1 ? '✗ Time\'s up! The boss strikes back.' : '✗ Wrong! The boss heals +75 HP.' }}
-            </p>
-            <p class="feedback-explanation">{{ question.explanation }}</p>
-            <button class="btn-primary" (click)="next()">
-              {{ current < questions.length - 1 ? 'Next Attack' : 'End Battle' }}
-            </button>
-          </div>
-        }
-      </div>
+    <!-- Feedback -->
+    @if (state === 'feedback') {
+    <div class="feedback" [class.feedback-correct]="selected === question.correct"
+      [class.feedback-wrong]="selected !== question.correct">
+      <p class="feedback-verdict">
+        {{ selected === question.correct ? '✓ Hit! -' + lastHit + ' HP' : selected === -1 ? '✗ Time\'s up! The boss
+        strikes back.' : '✗ Wrong! The boss heals +75 HP.' }}
+      </p>
+      <p class="feedback-explanation">{{ question.explanation }}</p>
+      <button class="btn-primary" (click)="next()">
+        {{ current < questions.length - 1 ? 'Next Attack' : 'End Battle' }} </button>
+    </div>
     }
   </div>
+  }
+</div>
 }
