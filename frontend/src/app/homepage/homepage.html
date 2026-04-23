@@ -34,12 +34,15 @@
           <div class="hero-visual">
             @if (bossHp>0) {
               <div class="boss-icon">&#128126;</div>
-
             } @else {
               <div class="boss-icon">&#128128;</div>
-
-          }
-            </div>
+            }
+            @if (showDamage) {
+              <div class="damage-pop" [class.heal]="isHeal">
+                {{ isHeal ? '+' : '-' }}{{ lastHit }}
+              </div>
+            }
+          </div>
         </div>
     </section>
 
