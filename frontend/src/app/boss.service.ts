@@ -23,4 +23,14 @@ export class BossService {
   updateHp(currentHp: number): Observable<BossState> {
     return this.http.patch<BossState>(`${this.apiUrl}/state/`, { currentHp });
   }
+
+  connectWs(): Observable<number> {
+    return new Observable(observer => {
+      const ws = new WebSocket('ws://localhost:8000/ws/boss/');
+      ws.onmessage = (event) => observer.next(JSON.parse(event.data).currentHp);
+      ws.onerror = () => observer.error('WebSocket error');
+      ws.onclose = () => observer.complete();
+      return () => ws.close();
+    });
+  }
 }

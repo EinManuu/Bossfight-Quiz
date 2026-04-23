@@ -76,8 +76,8 @@ export class SoloQuiz implements OnInit {
     this.scoresService.addScore(xp).subscribe({
       next: (stats) => {
         const oldPoints = stats.quizPoints - xp;
-        const oldLevel = Math.floor(oldPoints / 500);
-        const newLevel = Math.floor(stats.quizPoints / 500);
+        const oldLevel = Math.floor(oldPoints / 100);
+        const newLevel = Math.floor(stats.quizPoints / 100);
         if (newLevel > oldLevel && newLevel > 0) {
           this.newLevel = newLevel;
           this.state = 'levelup';

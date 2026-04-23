@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { BossService } from '../boss.service';
 import { QuestionsService, Question } from '../questions.service';
 import { ScoresService } from '../scores.service';
@@ -35,6 +35,7 @@ export class BossBattle implements OnInit, OnDestroy {
 
   timer = TIMER_SECONDS;
   private timerInterval: ReturnType<typeof setInterval> | null = null;
+  private wsSubscription?: Subscription;
 
   get question(): Question { return this.questions[this.current]; }
   get bossHpPercent(): number { return (this.bossHp / this.bossMaxHp) * 100; }
@@ -49,6 +50,15 @@ export class BossBattle implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.wsSubscription = this.bossService.connectWs().subscribe({
+      next: (hp) => {
+        if (this.state !== 'results') {
+          this.bossHp = hp;
+          this.cdr.detectChanges();
+        }
+      },
+    });
+
     forkJoin({
       boss: this.bossService.getState(),
       questions: this.questionsService.getBossQuestions(),
@@ -70,6 +80,7 @@ export class BossBattle implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.clearTimer();
+    this.wsSubscription?.unsubscribe();
   }
 
   private applyUpgrade(baseDamage: number): number {
@@ -119,9 +130,11 @@ export class BossBattle implements OnInit, OnDestroy {
       this.lastHit = dmg;
       this.sessionDamage += dmg;
       this.bossHp = Math.max(0, this.bossHp - dmg);
+      this.bossService.updateHp(this.bossHp).subscribe();
       this.triggerDamage();
     } else {
       this.bossHp = Math.min(this.bossMaxHp, this.bossHp + 75);
+      this.bossService.updateHp(this.bossHp).subscribe();
       this.triggerBossAttack();
     }
   }
@@ -139,7 +152,6 @@ export class BossBattle implements OnInit, OnDestroy {
   }
 
   private saveProgress() {
-    this.bossService.updateHp(this.bossHp).subscribe();
     if (this.sessionDamage > 0) {
       this.scoresService.addScore(0, this.sessionDamage).subscribe();
     }

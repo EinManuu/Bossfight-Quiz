@@ -14,7 +14,7 @@ class Score(models.Model):
 
     @property
     def level(self):
-        return self.quiz_points // 500
+        return self.quiz_points // 100
 
     def __str__(self):
         return f"{self.user.username}: {self.total}"

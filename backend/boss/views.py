@@ -2,7 +2,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 from .models import Boss
+from .consumers import BOSS_GROUP
 from questions.models import Question
 from questions.serializers import QuestionSerializer
 
@@ -30,6 +33,10 @@ def boss_state_view(request):
     new_hp = int(request.data.get('currentHp', boss.current_hp))
     boss.current_hp = max(0, min(boss.max_hp, new_hp))
     boss.save()
+    async_to_sync(get_channel_layer().group_send)(
+        BOSS_GROUP,
+        {'type': 'boss_hp_update', 'currentHp': boss.current_hp},
+    )
     return Response(_serialize_boss(boss))
 
 
