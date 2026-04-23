@@ -110,8 +110,13 @@ export class SoloQuiz implements OnInit {
 
   goToLearningModule() {
     const topicId = this.getLearningTopicId();
+    if (!topicId) {
+      window.location.href = 'http://localhost:4200/study-zone';
+      return;
+    }
+
     this.router.navigate(['/study-zone'], {
-      queryParams: topicId ? { topic: topicId } : undefined,
+      queryParams: { topic: topicId },
     });
   }
 

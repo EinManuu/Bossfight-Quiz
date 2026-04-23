@@ -90,7 +90,7 @@
           <div class="feedback" [class.feedback-correct]="selected === question.correct" [class.feedback-wrong]="selected !== question.correct">
             <p class="feedback-verdict">{{ selected === question.correct ? '✓ Correct!' : '✗ Incorrect' }}</p>
             <p class="feedback-explanation">{{ question.explanation }}</p>
-            @if (selected !== question.correct && hasLearningModule()) {
+            @if (selected !== question.correct) {
               <button class="btn-ghost" (click)="goToLearningModule()">Learn This Topic</button>
             }
             <button class="btn-primary" (click)="next()">
