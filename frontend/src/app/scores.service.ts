@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment';
 
 export interface LeaderboardEntry {
   username: string;
@@ -20,7 +21,7 @@ export interface PlayerStats {
 
 @Injectable({ providedIn: 'root' })
 export class ScoresService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

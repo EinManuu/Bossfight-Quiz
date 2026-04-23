@@ -90,11 +90,21 @@
           <div class="feedback" [class.feedback-correct]="selected === question.correct" [class.feedback-wrong]="selected !== question.correct">
             <p class="feedback-verdict">{{ selected === question.correct ? '✓ Correct!' : '✗ Incorrect' }}</p>
             <p class="feedback-explanation">{{ question.explanation }}</p>
+            @if (selected !== question.correct) {
+              <button class="btn-ghost" (click)="goToLearningModule()">Learn This Topic</button>
+            }
             <button class="btn-primary" (click)="next()">
               {{ current < questions.length - 1 ? 'Next Question' : 'See Results' }}
             </button>
           </div>
         }
+      </div>
+    }
+
+    @if (!loading && questions.length === 0) {
+      <div class="quiz-body" style="display:flex;align-items:center;justify-content:center;height:60vh;flex-direction:column;gap:1rem">
+        <p style="color:#888;font-size:1.1rem">No quiz questions are available right now.</p>
+        <button class="btn-ghost" (click)="goHome()">Back to Home</button>
       </div>
     }
   </div>

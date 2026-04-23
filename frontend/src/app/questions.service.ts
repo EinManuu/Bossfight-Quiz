@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment';
 
 export interface Question {
   id: number;
@@ -15,7 +16,7 @@ export interface Question {
 
 @Injectable({ providedIn: 'root' })
 export class QuestionsService {
-  private apiUrl = 'http://localhost:8000/api/questions/';
+  private apiUrl = `${environment.apiUrl}/questions/`;
 
   constructor(private http: HttpClient) {}
 
@@ -25,7 +26,11 @@ export class QuestionsService {
     });
   }
 
+  getAll(): Observable<Question[]> {
+    return this.http.get<Question[]>(this.apiUrl);
+  }
+
   getBossQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>('http://localhost:8000/api/boss/questions/');
+    return this.http.get<Question[]>(`${environment.apiUrl}/boss/questions/`);
   }
 }

@@ -28,8 +28,11 @@ export class BossBattle implements OnInit, OnDestroy {
   bossMaxHp = 10000;
   bossName = '';
   sessionDamage = 0;
+
   lastHit = 0;
   showDamage = false;
+  isHeal = false;
+
   bossAttacking = false;
   playerUpgrade = '';
 
@@ -37,9 +40,15 @@ export class BossBattle implements OnInit, OnDestroy {
   private timerInterval: ReturnType<typeof setInterval> | null = null;
   private wsSubscription?: Subscription;
 
+  private localHitPending = false;
+
   get question(): Question { return this.questions[this.current]; }
   get bossHpPercent(): number { return (this.bossHp / this.bossMaxHp) * 100; }
-  get progress(): number { return this.questions.length ? ((this.current + 1) / this.questions.length) * 100 : 0; }
+  get progress(): number {
+    return this.questions.length
+      ? ((this.current + 1) / this.questions.length) * 100
+      : 0;
+  }
 
   constructor(
     private router: Router,
@@ -53,7 +62,22 @@ export class BossBattle implements OnInit, OnDestroy {
     this.wsSubscription = this.bossService.connectWs().subscribe({
       next: (hp) => {
         if (this.state !== 'results') {
+          const prevHp = this.bossHp;
           this.bossHp = hp;
+
+          const diff = prevHp - hp;
+
+          if (diff !== 0) {
+            this.lastHit = Math.abs(diff);
+            this.isHeal = diff < 0;
+
+            if (!this.localHitPending) {
+              this.triggerEffect();
+            } else {
+              this.localHitPending = false;
+            }
+          }
+
           this.cdr.detectChanges();
         }
       },
@@ -70,6 +94,7 @@ export class BossBattle implements OnInit, OnDestroy {
         this.bossName = boss.name;
         this.playerUpgrade = stats.upgrade ?? '';
         this.questions = this.shuffle(questions).slice(0, QUESTIONS_PER_BATTLE);
+
         this.state = 'question';
         this.cdr.detectChanges();
         this.startTimer();
@@ -94,9 +119,11 @@ export class BossBattle implements OnInit, OnDestroy {
 
   private startTimer() {
     this.timer = TIMER_SECONDS;
+
     this.timerInterval = setInterval(() => {
       this.timer--;
       this.cdr.detectChanges();
+
       if (this.timer <= 0) {
         this.clearTimer();
         this.handleTimeout();
@@ -115,11 +142,18 @@ export class BossBattle implements OnInit, OnDestroy {
   private handleTimeout() {
     this.selected = -1;
     this.state = 'feedback';
+
+    this.isHeal = true;
+    this.lastHit = 75;
+    this.localHitPending = true;
+
+    this.triggerEffect();
     this.triggerBossAttack();
   }
 
   select(index: number) {
     if (this.state !== 'question') return;
+
     this.clearTimer();
     this.selected = index;
     this.state = 'feedback';
@@ -127,14 +161,27 @@ export class BossBattle implements OnInit, OnDestroy {
     if (index === this.question.correct) {
       const base = BASE_DAMAGE[this.question.difficulty] ?? 200;
       const dmg = this.applyUpgrade(base);
+
+      this.isHeal = false;
       this.lastHit = dmg;
       this.sessionDamage += dmg;
+
+      this.localHitPending = true;
+
       this.bossHp = Math.max(0, this.bossHp - dmg);
       this.bossService.updateHp(this.bossHp).subscribe();
-      this.triggerDamage();
+
+      this.triggerEffect();
     } else {
+      this.isHeal = true;
+      this.lastHit = 75;
+
+      this.localHitPending = true;
+
       this.bossHp = Math.min(this.bossMaxHp, this.bossHp + 75);
       this.bossService.updateHp(this.bossHp).subscribe();
+
+      this.triggerEffect();
       this.triggerBossAttack();
     }
   }
@@ -157,16 +204,24 @@ export class BossBattle implements OnInit, OnDestroy {
     }
   }
 
-  private triggerDamage() {
+  private triggerEffect() {
     this.showDamage = true;
     this.cdr.detectChanges();
-    setTimeout(() => { this.showDamage = false; this.cdr.detectChanges(); }, 1200);
+
+    setTimeout(() => {
+      this.showDamage = false;
+      this.cdr.detectChanges();
+    }, 1200);
   }
 
   private triggerBossAttack() {
     this.bossAttacking = true;
     this.cdr.detectChanges();
-    setTimeout(() => { this.bossAttacking = false; this.cdr.detectChanges(); }, 600);
+
+    setTimeout(() => {
+      this.bossAttacking = false;
+      this.cdr.detectChanges();
+    }, 600);
   }
 
   goHome() {

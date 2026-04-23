@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginPage } from './login-page/login-page';
+import { Register } from './register/register';
 import { Homepage } from './homepage/homepage';
 import { SoloQuiz } from './solo-quiz/solo-quiz';
 import { StudyZone } from './study-zone/study-zone';
@@ -14,6 +15,7 @@ import {ManagerPanel} from './manager-panel/manager-panel';
 export const routes: Routes = [
   { path: '', redirectTo:'login', pathMatch:"full"},
   { path: 'login', component: LoginPage, pathMatch: 'full'},
+  { path: 'register', component: Register},
   { path: 'home', component: Homepage, canActivate: [authGuardGuard], pathMatch: 'full'},
   { path: 'solo-quiz', component: SoloQuiz, canActivate:[authGuardGuard], pathMatch: 'full'},
   { path: 'study-zone', component: StudyZone, canActivate:[authGuardGuard], pathMatch: 'full' },

@@ -34,6 +34,11 @@
     font-size: 1.8rem;
 }
 
+.brand-name {
+    color: #60a5fa;
+    font-weight: 700;
+}
+
 .tagline {
     font-size: 2.4rem;
     font-weight: 800;
@@ -116,6 +121,12 @@
 /* Error */
 .error {
     color: #f87171;
+    font-size: 0.875rem;
+    margin: -8px 0;
+}
+
+.success {
+    color: #86efac;
     font-size: 0.875rem;
     margin: -8px 0;
 }
