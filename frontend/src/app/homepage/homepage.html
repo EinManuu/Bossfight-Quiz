@@ -84,6 +84,22 @@
                 </mat-card-actions>
             </mat-card>
 
+          @if (localStorage.getItem("role")=="Administrator") {
+            <mat-card class="mode-card">
+              <div class="card-icon study-icon">&#128219;</div>
+              <mat-card-header>
+                <mat-card-title>Admin Panel</mat-card-title>
+                <mat-card-subtitle>Configuration Dashboard</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>Add new questions and start a boss fight</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-flat-button (click)="goToAdminPanel()">Configure</button>
+              </mat-card-actions>
+            </mat-card>
+          }
+
         </div>
     </section>
 
