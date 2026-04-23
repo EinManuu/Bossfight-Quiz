@@ -25,6 +25,10 @@ export class QuestionsService {
     });
   }
 
+  getAll(): Observable<Question[]> {
+    return this.http.get<Question[]>(this.apiUrl);
+  }
+
   getBossQuestions(): Observable<Question[]> {
     return this.http.get<Question[]>('http://localhost:8000/api/boss/questions/');
   }

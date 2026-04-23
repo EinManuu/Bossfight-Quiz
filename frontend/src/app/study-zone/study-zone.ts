@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 interface Topic {
@@ -23,10 +24,23 @@ interface Section {
   templateUrl: './study-zone.html',
   styleUrl: './study-zone.css',
 })
-export class StudyZone {
+export class StudyZone implements OnInit {
   selected: Topic | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
+
+  ngOnInit() {
+    const topicId = this.route.snapshot.queryParamMap.get('topic');
+    if (!topicId) return;
+
+    const topic = this.topics.find((t) => t.id === topicId);
+    if (topic) {
+      this.open(topic);
+    }
+  }
 
   goHome() {
     this.router.navigate(['/home']);
