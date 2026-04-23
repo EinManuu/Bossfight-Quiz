@@ -1,5 +1,12 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
 
 export const adminGuardGuard: CanActivateFn = (route, state) => {
-  return localStorage.getItem('role') == "Administrator";
+  const router = inject(Router);
+
+  if (localStorage.getItem('role') == "Administrator") {
+    return true;
+  }
+
+  return router.createUrlTree(['/home']);
 };
