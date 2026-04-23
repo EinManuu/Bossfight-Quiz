@@ -1,0 +1,173 @@
+/* Current boss status */
+.boss-status-card {
+  background: #1a0d0d;
+  border: 1px solid #2a1515;
+  border-radius: 12px;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.boss-status-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4ade80;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.boss-status-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f87171;
+}
+
+.hp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hp-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hp-numbers {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.hp-track {
+  height: 8px;
+  background: #1e2740;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ef4444, #f97316);
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+
+/* Form */
+.form-card {
+  background: #161b27;
+  border: 1px solid #1e2740;
+  border-radius: 14px;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+}
+
+.form-sub {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: -8px 0 0;
+  line-height: 1.5;
+}
+
+/* Alerts */
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.alert-success {
+  background: #0d2818;
+  border: 1px solid #4ade80;
+  color: #4ade80;
+}
+
+.alert-error {
+  background: #1c0a0a;
+  border: 1px solid #f87171;
+  color: #f87171;
+}
+
+/* Fields */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.required { color: #f87171; }
+
+.field-hint {
+  font-size: 0.8rem;
+  color: #475569;
+  margin: 0;
+}
+
+/* Inputs */
+.input-field,
+.input-area {
+  width: 100%;
+  box-sizing: border-box;
+  background: #0f1117;
+  border: 1px solid #1e2740;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-family: inherit;
+  padding: 10px 14px;
+  transition: border-color 0.15s;
+  resize: vertical;
+}
+
+.input-field:focus,
+.input-area:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.input-field::placeholder,
+.input-area::placeholder { color: #475569; }
+
+/* Submit */
+.btn-submit {
+  padding: 12px 28px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.btn-submit:hover:not(:disabled) { background: #b91c1c; }
+.btn-submit:disabled { opacity: 0.5; cursor: default; }

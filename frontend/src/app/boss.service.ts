@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment';
 
 export interface BossState {
   id: number;
@@ -12,7 +13,7 @@ export interface BossState {
 
 @Injectable({ providedIn: 'root' })
 export class BossService {
-  private apiUrl = 'http://localhost:8000/api/boss';
+  private apiUrl = `${environment.apiUrl}/boss`;
 
   constructor(private http: HttpClient) {}
 
@@ -24,9 +25,13 @@ export class BossService {
     return this.http.patch<BossState>(`${this.apiUrl}/state/`, { currentHp });
   }
 
+  createBoss(data: { name: string; description: string; maxHp: number }): Observable<BossState> {
+    return this.http.post<BossState>(`${this.apiUrl}/create/`, data);
+  }
+
   connectWs(): Observable<number> {
     return new Observable(observer => {
-      const ws = new WebSocket('ws://localhost:8000/ws/boss/');
+      const ws = new WebSocket(`${environment.wsUrl}/boss/`);
       ws.onmessage = (event) => observer.next(JSON.parse(event.data).currentHp);
       ws.onerror = () => observer.error('WebSocket error');
       ws.onclose = () => observer.complete();

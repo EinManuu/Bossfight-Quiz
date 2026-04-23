@@ -4,8 +4,12 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST', 'localhost')]
+SECRET_KEY = os.environ['SECRET_KEY']
 
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOST', 'localhost')]
+CSRF_TRUSTED_ORIGINS=[os.getenv('CSRF_TRUSTED_ORIGINS', 'localhost')]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

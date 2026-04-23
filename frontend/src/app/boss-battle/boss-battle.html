@@ -33,16 +33,33 @@
 @if (state === 'question' || state === 'feedback') {
 <div class="page" [class.boss-attacking]="bossAttacking">
 
+  @if (bossDefeated) {
+  <div class="defeated-overlay">
+    <div class="defeated-card">
+      <div class="defeated-icon">💀</div>
+      <h2 class="defeated-title">Boss Defeated!</h2>
+      <p class="defeated-sub">Another player dealt the killing blow. The threat has been neutralised.</p>
+      <button class="btn-primary" (click)="goHome()">Back to Base</button>
+    </div>
+  </div>
+  }
+
   <!-- Header -->
   <header class="battle-header">
     <button class="back-btn" (click)="goHome()">&#8592; Retreat</button>
     <span class="event-label">&#128293; Boss Battle</span>
     <span class="q-counter">{{ current + 1 }} / {{ questions.length }}</span>
   </header>
+  
+  
+    <div class="boss-section">
+      @if (bossHp>0) {
+        <div class="boss-icon">&#128126;</div>
 
-  <!-- Boss section -->
-  <div class="boss-section">
-    <div class="boss-icon">&#128128;</div>
+      } @else {
+      <div class="boss-icon">&#128128;</div>
+
+    }
 
     @if (showDamage) {
     <div class="damage-pop" [class.heal]="isHeal">

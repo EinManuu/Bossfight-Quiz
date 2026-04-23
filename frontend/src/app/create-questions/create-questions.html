@@ -1,46 +1,67 @@
-<div class="app">
+<div class="form-card">
+  <h2 class="form-title">Add Question</h2>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="active">Questions</button>
-    <button>Boss</button>
-    <button>Leaderboard</button>
-    <button>Prices</button>
+  @if (success) {
+  <div class="alert alert-success">&#10003; Question created successfully!</div>
+  }
+  @if (error) {
+  <div class="alert alert-error">&#9888; {{ error }}</div>
+  }
+
+  <!-- Department -->
+  <div class="field">
+    <label class="field-label">Department</label>
+    <div class="pill-group">
+      <button class="pill" [class.active]="department === 'IT'" (click)="department = 'IT'" type="button">IT</button>
+      <button class="pill" [class.active]="department === 'Finance'" (click)="department = 'Finance'" type="button">Finance</button>
+    </div>
   </div>
 
-  <!-- Card -->
-  <div class="card">
-
-    <!-- Image Upload -->
-    <div class="image-box">
-      <input type="file" (change)="onFileSelected($event)" accept="image/*">
-
-      <img *ngIf="imagePreview" [src]="imagePreview" class="preview">
-
-      <div *ngIf="!imagePreview" class="placeholder">
-        Tap to upload image
-      </div>
+  <!-- Difficulty -->
+  <div class="field">
+    <label class="field-label">Difficulty</label>
+    <div class="pill-group">
+      <button class="pill diff-easy" [class.active]="difficulty === 'easy'" (click)="difficulty = 'easy'" type="button">Easy</button>
+      <button class="pill diff-medium" [class.active]="difficulty === 'medium'" (click)="difficulty = 'medium'" type="button">Medium</button>
+      <button class="pill diff-hard" [class.active]="difficulty === 'hard'" (click)="difficulty = 'hard'" type="button">Hard</button>
     </div>
-
-    <!-- Question -->
-    <div class="section">
-      <label>Question</label>
-      <input type="text" placeholder="Enter your question">
-    </div>
-
-    <!-- Answers -->
-    <div class="section">
-      <label>Answers</label>
-
-      <div class="answer" *ngFor="let a of [1,2,3,4]">
-        <input type="checkbox">
-        <input type="text" placeholder="Option {{a}}">
-      </div>
-    </div>
-
-    <!-- Button -->
-    <button class="next-btn">Next</button>
-
   </div>
 
+  <!-- Question text -->
+  <div class="field">
+    <label class="field-label">Question <span class="required">*</span></label>
+    <textarea class="input-area" [(ngModel)]="questionText" placeholder="Enter the question..." rows="3"></textarea>
+  </div>
+
+  <!-- Answers -->
+  <div class="field">
+    <label class="field-label">Answers <span class="required">*</span></label>
+    <p class="field-hint">Click the letter to mark the correct answer</p>
+    <div class="answers-list">
+      @for (answer of answers; track $index) {
+      <div class="answer-row" [class.is-correct]="correctIndex === $index">
+        <button class="answer-letter" [class.correct]="correctIndex === $index" (click)="correctIndex = $index" type="button">
+          {{ letters[$index] }}
+        </button>
+        <input class="answer-input" [(ngModel)]="answers[$index]" [placeholder]="'Option ' + letters[$index]">
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Explanation -->
+  <div class="field">
+    <label class="field-label">Explanation <span class="required">*</span></label>
+    <textarea class="input-area" [(ngModel)]="explanation" placeholder="Explain why the correct answer is right..." rows="3"></textarea>
+  </div>
+
+  <!-- Image URL -->
+  <div class="field">
+    <label class="field-label">Image URL <span class="optional">(optional)</span></label>
+    <input class="input-field" [(ngModel)]="imageUrl" placeholder="https://...">
+  </div>
+
+  <button class="btn-submit" (click)="submit()" [disabled]="submitting">
+    {{ submitting ? 'Creating...' : 'Create Question' }}
+  </button>
 </div>

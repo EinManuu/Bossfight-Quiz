@@ -401,6 +401,51 @@
     .btn-primary { width: 100%; text-align: center; }
 }
 
+.defeated-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+
+.defeated-card {
+  background: #161b27;
+  border: 1px solid #f87171;
+  border-radius: 16px;
+  padding: 48px 40px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: fadeInScale 0.3s ease;
+}
+
+.defeated-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+}
+
+.defeated-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #f87171;
+  margin: 0 0 12px;
+}
+
+.defeated-sub {
+  color: #94a3b8;
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
 .damage-pop {
   position: absolute;
   font-size: 2rem;

@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://0013371.xyz/api'
+  apiUrl: 'https://quiz.lexwuestenenk.nl/api',
+  wsUrl: 'wss://quiz.lexwuestenenk.nl/ws'
 };

@@ -1,5 +1,3 @@
-# config/settings/base.py
-
 from pathlib import Path
 from datetime import timedelta
 

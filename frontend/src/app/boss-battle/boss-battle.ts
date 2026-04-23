@@ -35,6 +35,7 @@ export class BossBattle implements OnInit, OnDestroy {
 
   bossAttacking = false;
   playerUpgrade = '';
+  bossDefeated = false;
 
   timer = TIMER_SECONDS;
   private timerInterval: ReturnType<typeof setInterval> | null = null;
@@ -64,6 +65,11 @@ export class BossBattle implements OnInit, OnDestroy {
         if (this.state !== 'results') {
           const prevHp = this.bossHp;
           this.bossHp = hp;
+
+          if (hp === 0 && prevHp > 0 && !this.localHitPending) {
+            this.bossDefeated = true;
+            this.clearTimer();
+          }
 
           const diff = prevHp - hp;
 

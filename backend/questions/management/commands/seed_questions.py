@@ -142,6 +142,136 @@ QUESTIONS = [
         "correct": 1,
         "explanation": "Segregation of duties is a key internal control that splits responsibilities (e.g. approving vs. processing payments) so no single individual can both execute and conceal a fraudulent transaction.",
     },
+
+    # --- IT situational ---
+    {
+        "department": "IT", "difficulty": "easy", "image": "",
+        "question": "You find a USB stick in the car park with the company logo on it. What should you do?",
+        "answers": ["Plug it in to see who it belongs to", "Take it home for personal use", "Hand it in to IT security without plugging it in", "Leave it where you found it"],
+        "correct": 2,
+        "explanation": "Unknown USB drives are a classic attack vector — they can automatically run malware the moment they are plugged in. Hand it to IT security so they can inspect it safely.",
+    },
+    {
+        "department": "IT", "difficulty": "easy", "image": "",
+        "question": "You receive an unexpected email with an attachment from an unknown sender. What should you do?",
+        "answers": ["Open the attachment to see if it is relevant to your work", "Forward it to colleagues to check if they got it too", "Delete it and report it to IT security", "Reply asking the sender who they are"],
+        "correct": 2,
+        "explanation": "Unexpected attachments from unknown senders are a primary malware delivery method. Delete without opening and report it so IT can check whether others received the same email.",
+    },
+    {
+        "department": "IT", "difficulty": "easy", "image": "",
+        "question": "You notice someone looking over your shoulder while you type your password. What should you do?",
+        "answers": ["Finish what you are doing and mention it to a colleague later", "Change your password as soon as possible and report the incident", "Assume it was accidental and ignore it", "Ask the person to step back and continue working"],
+        "correct": 1,
+        "explanation": "Shoulder surfing can compromise your credentials. Change your password immediately in case it was observed, and report the incident so it can be investigated.",
+    },
+    {
+        "department": "IT", "difficulty": "medium", "image": "",
+        "question": "You are leaving your desk for 30 minutes. What should you do with your computer?",
+        "answers": ["Leave it open — you will be back soon", "Log out fully and shut it down", "Lock the screen so it requires a password to unlock", "Put a sticky note on the screen saying you will be back"],
+        "correct": 2,
+        "explanation": "Locking your screen (Win+L on Windows) prevents unauthorised access while you're away without the overhead of a full shutdown. It is the standard best practice for short absences.",
+    },
+    {
+        "department": "IT", "difficulty": "medium", "image": "",
+        "question": "A colleague asks for your login credentials because they are locked out and need urgent access. What do you do?",
+        "answers": ["Share your credentials since you trust them", "Give them your password but make them promise not to tell anyone", "Refuse and direct them to IT support to regain access", "Write your password on a note and leave it on their desk"],
+        "correct": 2,
+        "explanation": "Sharing credentials violates the principle of individual accountability and can make you liable for any actions taken under your account. IT support exists to handle lockouts securely.",
+    },
+    {
+        "department": "IT", "difficulty": "medium", "image": "",
+        "question": "You see something suspicious on the network — traffic to an unknown external server at unusual hours. What should you do?",
+        "answers": ["Investigate it yourself to avoid bothering the security team", "Ignore it as it is probably a background update", "Report it to the security team immediately with as much detail as possible", "Restart the affected machine to stop the traffic"],
+        "correct": 2,
+        "explanation": "Unusual outbound traffic could indicate malware, a data breach, or an insider threat. Always report it promptly — early reporting is critical for containment. Do not attempt to investigate or remediate yourself.",
+    },
+    {
+        "department": "IT", "difficulty": "medium", "image": "",
+        "question": "A website you visit shows a browser warning saying the certificate is invalid. What should you do?",
+        "answers": ["Click 'Proceed anyway' — the warning is usually just a technical glitch", "Bookmark the page and try again later", "Close the browser tab and report it to IT", "Refresh the page until the warning goes away"],
+        "correct": 2,
+        "explanation": "An invalid certificate warning may mean the connection is being intercepted (MITM attack) or the site is fraudulent. Do not proceed, and report it to IT so they can investigate.",
+    },
+    {
+        "department": "IT", "difficulty": "hard", "image": "",
+        "question": "You receive a phone call from someone claiming to be from Microsoft saying your computer is infected and they need remote access. What should you do?",
+        "answers": ["Allow remote access so they can fix the issue", "Give them your IP address so they can diagnose remotely", "Hang up immediately — this is a well-known tech support scam", "Ask them to send a confirmation email first"],
+        "correct": 2,
+        "explanation": "Microsoft and other legitimate companies do not make unsolicited calls about your computer. This is a tech support scam designed to gain remote access or extract payment. Hang up and report it.",
+    },
+    {
+        "department": "IT", "difficulty": "hard", "image": "",
+        "question": "What is the primary risk of using the same password across multiple work systems?",
+        "answers": ["It slows down login times", "A single breach on any one system exposes all others", "It violates copyright law", "Passwords expire faster when reused"],
+        "correct": 1,
+        "explanation": "Credential stuffing attacks take leaked username/password pairs and try them across other services. If you reuse passwords, one breached site can cascade into many compromised accounts.",
+    },
+    {
+        "department": "IT", "difficulty": "hard", "image": "",
+        "question": "What should you do if you suspect your work device has been infected with malware?",
+        "answers": ["Run an antivirus scan and keep working if it finds nothing", "Disconnect from the network immediately and contact IT security", "Restart the device and see if the problem goes away", "Delete suspicious files yourself to clean the system"],
+        "correct": 1,
+        "explanation": "Disconnecting from the network prevents the malware from spreading or communicating with an attacker. IT security must then assess the device — do not attempt self-remediation as you may destroy forensic evidence.",
+    },
+
+    # --- Finance situational ---
+    {
+        "department": "Finance", "difficulty": "easy", "image": "",
+        "question": "You find printed payroll documents left unattended at a shared printer. What should you do?",
+        "answers": ["Leave them — the owner will collect them", "Take them to your desk and email the owner", "Return them to the owner directly or lock them away and notify the owner", "Put them in the recycling bin to keep the workspace tidy"],
+        "correct": 2,
+        "explanation": "Payroll data is highly sensitive personal information. Leaving it unattended risks a data breach. Secure the documents and notify the owner immediately — do not leave them where others can see them.",
+    },
+    {
+        "department": "Finance", "difficulty": "easy", "image": "",
+        "question": "A colleague asks you for another employee's salary details. What do you do?",
+        "answers": ["Share it if you trust the colleague", "Check your email to see if there is an authorisation from management", "Decline and direct them to HR, who manages that information", "Share only the pay band, not the exact figure"],
+        "correct": 2,
+        "explanation": "Salary data is personal data under UK GDPR. It should only be disclosed through authorised HR processes. Sharing it informally — even to a trusted colleague — is a data breach.",
+    },
+    {
+        "department": "Finance", "difficulty": "medium", "image": "",
+        "question": "You receive an invoice from a known vendor but the bank details are different from usual. What is the first thing you do?",
+        "answers": ["Process it — the invoice looks genuine", "Call the vendor on a number you already have on file", "Email the vendor asking them to confirm", "Ask your manager to approve it as normal"],
+        "correct": 1,
+        "explanation": "Fraudsters often intercept emails and swap bank details — a technique called invoice redirect fraud. Always verify changes by calling a number you already hold for that vendor, never a number provided in the suspicious email or invoice.",
+    },
+    {
+        "department": "Finance", "difficulty": "medium", "image": "",
+        "question": "You notice a transaction in the system that you do not recognise and did not authorise. What should you do?",
+        "answers": ["Reverse the transaction yourself to fix it quickly", "Wait to see if a colleague claims it before escalating", "Report it to your manager and the security team right away", "Document it in a personal log and monitor for more"],
+        "correct": 2,
+        "explanation": "Unrecognised transactions could indicate fraud, an insider threat, or a system compromise. Immediate reporting gives the organisation the best chance to investigate and limit damage.",
+    },
+    {
+        "department": "Finance", "difficulty": "medium", "image": "",
+        "question": "Someone calls claiming to be from your bank's fraud team asking you to confirm account numbers to stop a suspicious transaction. What do you do?",
+        "answers": ["Confirm the details — stopping fraud is urgent", "Ask for their employee ID and then confirm", "Hang up and call the bank back on their official number", "Give partial details to verify they are genuine first"],
+        "correct": 2,
+        "explanation": "Fraudsters impersonate bank fraud teams to extract account details — a technique called vishing. Always hang up and call back using the number on the bank's official website or your contract, never a number the caller gives you.",
+    },
+    {
+        "department": "Finance", "difficulty": "hard", "image": "",
+        "question": "A client asks you to process a large cash payment split into several smaller transactions to avoid reporting thresholds. What should you do?",
+        "answers": ["Process them — it is the client's money and their choice", "Process them but make a private note just in case", "Refuse and file a Suspicious Activity Report (SAR) with your MLRO", "Ask the client to provide a reason in writing before processing"],
+        "correct": 2,
+        "explanation": "Structuring transactions to stay below reporting thresholds is a money laundering technique known as 'smurfing'. You are legally required to report this to your Money Laundering Reporting Officer (MLRO) via a SAR.",
+    },
+    {
+        "department": "Finance", "difficulty": "hard", "image": "",
+        "question": "Your company experiences a ransomware attack and financial data is encrypted. Attackers demand payment to restore access. What should the organisation do first?",
+        "answers": ["Pay the ransom immediately to restore operations", "Disconnect affected systems and contact IT security and management", "Try to negotiate a lower ransom amount", "Restore from backup without telling anyone to avoid reputational damage"],
+        "correct": 1,
+        "explanation": "The first step is containment — disconnect affected systems to stop the spread. Paying the ransom is not recommended (it funds criminals and doesn't guarantee recovery). The incident must be reported internally and potentially to the ICO under UK GDPR.",
+    },
+    {
+        "department": "Finance", "difficulty": "easy", "image": "",
+        "question": "What does a clean desk policy require you to do at the end of the working day?",
+        "answers": ["Turn off your monitor", "Clear your desk of all sensitive documents and lock them away", "Log out of your email", "Shred all documents regardless of sensitivity"],
+        "correct": 1,
+        "explanation": "A clean desk policy ensures sensitive documents, notes, and storage devices are not left visible when you are away from your desk. This reduces the risk of physical data theft or accidental disclosure.",
+    },
 ]
 
 
@@ -149,11 +279,19 @@ class Command(BaseCommand):
     help = 'Seed the questions table with the initial 20 questions'
 
     def handle(self, *args, **options):
-        if Question.objects.exists():
-            self.stdout.write('Questions already exist, skipping seed.')
-            return
+        created_count = 0
+        updated_count = 0
 
         for data in QUESTIONS:
-            Question.objects.create(**data)
+            _, created = Question.objects.update_or_create(
+                question=data['question'],
+                defaults={k: v for k, v in data.items() if k != 'question'},
+            )
+            if created:
+                created_count += 1
+            else:
+                updated_count += 1
 
-        self.stdout.write(self.style.SUCCESS(f'Created {len(QUESTIONS)} questions.'))
+        self.stdout.write(self.style.SUCCESS(
+            f'Done: {created_count} created, {updated_count} updated.'
+        ))

@@ -29,11 +29,22 @@
                         <div class="hp-bar" [style.width.%]="bossHpPercent"></div>
                     </div>
                 </div>
-                <button mat-flat-button class="join-btn" (click)="goToBossBattle()">Join the Battle</button>
+                <button mat-flat-button class="join-btn" (click)="goToBossBattle()" [disabled]="bossHp === 0">
+                  {{ bossHp === 0 ? 'Boss Defeated' : 'Join the Battle' }}
+                </button>
             </div>
-            <div class="hero-visual">
-                <div class="boss-icon">&#128128;</div>
-            </div>
+          <div class="hero-visual">
+            @if (bossHp>0) {
+              <div class="boss-icon">&#128126;</div>
+            } @else {
+              <div class="boss-icon">&#128128;</div>
+            }
+            @if (showDamage) {
+              <div class="damage-pop" [class.heal]="isHeal">
+                {{ isHeal ? '+' : '-' }}{{ lastHit }}
+              </div>
+            }
+          </div>
         </div>
     </section>
 
@@ -83,6 +94,22 @@
                     <button mat-flat-button (click)="goToLeaderboard()">View</button>
                 </mat-card-actions>
             </mat-card>
+
+          @if (localStorage.getItem("role")=="Administrator") {
+            <mat-card class="mode-card">
+              <div class="card-icon study-icon">&#128219;</div>
+              <mat-card-header>
+                <mat-card-title>Admin Panel</mat-card-title>
+                <mat-card-subtitle>Configuration Dashboard</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>Add new questions and start a boss fight</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-flat-button (click)="goToAdminPanel()">Configure</button>
+              </mat-card-actions>
+            </mat-card>
+          }
 
         </div>
     </section>

@@ -10,6 +10,7 @@ import { CreateQuestions } from './create-questions/create-questions';
 import { authGuardGuard } from './auth-guard-guard';
 import { adminGuardGuard } from './admin-guard-guard';
 import {Notfound} from './notfound/notfound';
+import {ManagerPanel} from './manager-panel/manager-panel';
 
 export const routes: Routes = [
   { path: '', redirectTo:'login', pathMatch:"full"},
@@ -20,6 +21,6 @@ export const routes: Routes = [
   { path: 'study-zone', component: StudyZone, canActivate:[authGuardGuard], pathMatch: 'full' },
   { path: 'leaderboard', component: Leaderboard, canActivate:[authGuardGuard], pathMatch: 'full' },
   { path: 'boss-battle', component: BossBattle, canActivate:[authGuardGuard], pathMatch: 'full' },
-  { path: 'admin-panel', component: CreateQuestions, canActivate:[authGuardGuard, adminGuardGuard], pathMatch: 'full' },
+  { path: 'admin-panel', component: ManagerPanel, canActivate:[authGuardGuard, adminGuardGuard], pathMatch: 'full' },
   { path: '**', component: Notfound},
 ];

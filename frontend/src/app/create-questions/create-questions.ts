@@ -1,32 +1,84 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { QuestionsService } from '../questions.service';
 
 @Component({
   selector: 'app-create-questions',
-  imports: [NgForOf, NgIf],
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './create-questions.html',
   styleUrl: './create-questions.css',
 })
 export class CreateQuestions {
-  imagePreview: string | ArrayBuffer | null = null;
-  constructor(private cdr: ChangeDetectorRef) {}
+  department = 'IT';
+  difficulty = 'medium';
+  questionText = '';
+  answers = ['', '', '', ''];
+  correctIndex = 0;
+  explanation = '';
+  imageUrl = '';
 
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
+  submitting = false;
+  success = false;
+  error = '';
 
-    if (!input.files || input.files.length === 0) return;
+  readonly letters = ['A', 'B', 'C', 'D'];
 
-    const file = input.files[0];
-    const reader = new FileReader();
+  constructor(
+    private questionsService: QuestionsService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
+  submit() {
+    this.error = '';
+    this.success = false;
 
-      // 🔥 wichtig
-      this.cdr.detectChanges();
-    };
+    if (!this.questionText.trim()) {
+      this.error = 'Question text is required.';
+      return;
+    }
+    if (this.answers.some(a => !a.trim())) {
+      this.error = 'All four answer options are required.';
+      return;
+    }
+    if (!this.explanation.trim()) {
+      this.error = 'Explanation is required.';
+      return;
+    }
 
-    reader.readAsDataURL(file);
+    this.submitting = true;
+    this.cdr.detectChanges();
+
+    this.questionsService.createQuestion({
+      department: this.department,
+      difficulty: this.difficulty,
+      question: this.questionText,
+      answers: [...this.answers],
+      correct: this.correctIndex,
+      explanation: this.explanation,
+      image: this.imageUrl,
+    }).subscribe({
+      next: () => {
+        this.success = true;
+        this.submitting = false;
+        this.reset();
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.error = 'Failed to create question. Please try again.';
+        this.submitting = false;
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  private reset() {
+    this.department = 'IT';
+    this.difficulty = 'medium';
+    this.questionText = '';
+    this.answers = ['', '', '', ''];
+    this.correctIndex = 0;
+    this.explanation = '';
+    this.imageUrl = '';
   }
 }
-
