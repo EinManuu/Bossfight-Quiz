@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginPage } from './login-page/login-page';
+import { Register } from './register/register';
 import { Homepage } from './homepage/homepage';
 import { SoloQuiz } from './solo-quiz/solo-quiz';
 import { StudyZone } from './study-zone/study-zone';
@@ -12,6 +13,7 @@ import {Notfound} from './notfound/notfound';
 
 export const routes: Routes = [
   { path: '', component: LoginPage},
+  { path: 'register', component: Register},
   { path: 'home', component: Homepage, canActivate: [authGuardGuard]},
   { path: 'solo-quiz', component: SoloQuiz, canActivate:[authGuardGuard]},
   { path: 'study-zone', component: StudyZone, canActivate:[authGuardGuard] },

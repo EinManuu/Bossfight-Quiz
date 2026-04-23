@@ -6,6 +6,7 @@ interface LoginResponse {
   access: string;
   username: string;
   role: string;
+  message?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -17,6 +18,19 @@ export class AuthService {
   login(username: string, password: string): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/login/`, { username, password })
+      .pipe(
+        tap((res) => {
+          localStorage.setItem('token', res.access);
+          localStorage.setItem('loggedIn', 'true');
+          localStorage.setItem('role', res.role);
+          localStorage.setItem('username', res.username);
+        })
+      );
+  }
+
+  register(username: string): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/register/`, { username })
       .pipe(
         tap((res) => {
           localStorage.setItem('token', res.access);
