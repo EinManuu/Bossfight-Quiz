@@ -12,13 +12,14 @@ import { adminGuardGuard } from './admin-guard-guard';
 import {Notfound} from './notfound/notfound';
 
 export const routes: Routes = [
-  { path: '', component: LoginPage},
+  { path: '', redirectTo:'login', pathMatch:"full"},
+  { path: 'login', component: LoginPage, pathMatch: 'full'},
   { path: 'register', component: Register},
-  { path: 'home', component: Homepage, canActivate: [authGuardGuard]},
-  { path: 'solo-quiz', component: SoloQuiz, canActivate:[authGuardGuard]},
-  { path: 'study-zone', component: StudyZone, canActivate:[authGuardGuard] },
-  { path: 'leaderboard', component: Leaderboard, canActivate:[authGuardGuard] },
-  { path: 'boss-battle', component: BossBattle, canActivate:[authGuardGuard] },
-  { path: 'admin-panel', component: CreateQuestions, canActivate:[authGuardGuard, adminGuardGuard] },
+  { path: 'home', component: Homepage, canActivate: [authGuardGuard], pathMatch: 'full'},
+  { path: 'solo-quiz', component: SoloQuiz, canActivate:[authGuardGuard], pathMatch: 'full'},
+  { path: 'study-zone', component: StudyZone, canActivate:[authGuardGuard], pathMatch: 'full' },
+  { path: 'leaderboard', component: Leaderboard, canActivate:[authGuardGuard], pathMatch: 'full' },
+  { path: 'boss-battle', component: BossBattle, canActivate:[authGuardGuard], pathMatch: 'full' },
+  { path: 'admin-panel', component: CreateQuestions, canActivate:[authGuardGuard, adminGuardGuard], pathMatch: 'full' },
   { path: '**', component: Notfound},
 ];
