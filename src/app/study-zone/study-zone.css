@@ -1,0 +1,291 @@
+.page {
+    min-height: 100vh;
+    background-color: #0f1117;
+    color: #e2e8f0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background-color: #161b27;
+    border-bottom: 1px solid #1e2740;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0;
+}
+
+.back-btn:hover {
+    color: #e2e8f0;
+}
+
+.header-label {
+    font-weight: 600;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Tags */
+.tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tag.red    { background: #3b1f1f; color: #f87171; }
+.tag.orange { background: #3b2a1f; color: #fb923c; }
+.tag.blue   { background: #1e3a5f; color: #60a5fa; }
+.tag.yellow { background: #3b3000; color: #fbbf24; }
+.tag.purple { background: #2e1f3b; color: #c084fc; }
+
+/* ── Topic list ── */
+.list-body {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.list-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.list-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 0;
+}
+
+.list-sub {
+    color: #64748b;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.topic-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.topic-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: #161b27;
+    border: 1px solid #1e2740;
+    border-radius: 12px;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    width: 100%;
+    color: inherit;
+}
+
+.topic-card:hover {
+    border-color: #2563eb;
+    background: #1a2035;
+}
+
+.topic-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    width: 48px;
+    text-align: center;
+}
+
+.topic-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.topic-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topic-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.topic-summary {
+    color: #64748b;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.topic-arrow {
+    color: #334155;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    transition: color 0.15s;
+}
+
+.topic-card:hover .topic-arrow {
+    color: #60a5fa;
+}
+
+/* ── Topic detail ── */
+.detail-body {
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.detail-hero {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.detail-icon {
+    font-size: 3.5rem;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.detail-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 8px 0 8px;
+}
+
+.detail-summary {
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.sections {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #1e2740;
+}
+
+.section:last-child {
+    border-bottom: none;
+}
+
+.section-heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #60a5fa;
+    margin: 0;
+}
+
+.section-body {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.bullet-list {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    padding-left: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bullet-list li::marker {
+    color: #2563eb;
+}
+
+@media (max-width: 640px) {
+    .header {
+        padding: 12px 16px;
+    }
+
+    .list-body {
+        padding: 32px 16px;
+        gap: 24px;
+    }
+
+    .list-title {
+        font-size: 1.7rem;
+    }
+
+    .topic-card {
+        padding: 16px;
+        gap: 14px;
+    }
+
+    .topic-icon {
+        font-size: 1.6rem;
+        width: 36px;
+    }
+
+    .topic-arrow {
+        display: none;
+    }
+
+    .detail-body {
+        padding: 32px 16px;
+        gap: 28px;
+    }
+
+    .detail-hero {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .detail-icon {
+        font-size: 2.5rem;
+    }
+
+    .detail-title {
+        font-size: 1.5rem;
+    }
+}

@@ -1,1 +1,33 @@
-<p>login-page works!</p>
+<div class="page">
+    <div class="left-panel">
+        <div class="brand">
+            <span class="brand-icon">&#9876;</span>
+            <span class="brand-name">CyberForce</span>
+        </div>
+        <h2 class="tagline">Train your team.<br>Defend your company.</h2>
+        <p class="tagline-sub">A gamified cybersecurity platform built for the whole organisation.</p>
+    </div>
+
+    <div class="right-panel">
+        <form class="form" (ngSubmit)="onLogin()">
+            <h1 class="form-title">Welcome back</h1>
+            <p class="form-sub">Sign in to your account</p>
+
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Enter your username" autocomplete="username" />
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Enter your password" autocomplete="current-password" />
+            </div>
+
+            @if (error) {
+                <p class="error">{{ error }}</p>
+            }
+
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+    </div>
+</div>
