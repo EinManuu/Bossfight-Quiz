@@ -9,7 +9,9 @@ import { NgForOf, NgIf } from '@angular/common';
 })
 export class CreateQuestions {
   imagePreview: string | ArrayBuffer | null = null;
+
   constructor(private cdr: ChangeDetectorRef) {}
+
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
