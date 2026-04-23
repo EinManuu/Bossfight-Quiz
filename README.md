@@ -1,59 +1,150 @@
 # BossfightQuiz
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+A full-stack quiz application with real-time WebSocket support. The backend is built with Django + Django Channels, and the frontend is an Angular SPA.
 
-## Development server
+## Prerequisites
 
-To start a local development server, run:
+- **Python** 3.10+
+- **Node.js** 18+ and **npm** 10+
+- **Angular CLI**: `npm install -g @angular/cli`
+
+---
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd Bossfight-Quiz
+```
+
+### 2. Backend setup
+
+```bash
+cd backend
+
+# Create and activate a virtual environment
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run database migrations
+python manage.py migrate
+
+# (Optional) Create a superuser for the Django admin
+python manage.py createsuperuser
+```
+
+### 3. Frontend setup
+
+```bash
+cd frontend
+npm install
+```
+
+---
+
+## Running locally
+
+Both the backend and frontend need to run simultaneously in separate terminals.
+
+**Terminal 1 — Backend** (from `backend/`):
+
+```bash
+python manage.py runserver
+```
+
+The API will be available at `http://localhost:8000`.
+
+**Terminal 2 — Frontend** (from `frontend/`):
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open your browser at `http://localhost:4200`. The app proxies API requests to the backend automatically.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Running with Docker
+
+Each service has its own Dockerfile. Build and run them individually:
 
 ```bash
+# Backend
+cd backend
+docker build -t bossfight-backend .
+docker run -p 8000:8000 bossfight-backend
+
+# Frontend
+cd frontend
+docker build -t bossfight-frontend .
+docker run -p 80:80 bossfight-frontend
+```
+
+---
+
+## Development
+
+### Useful backend commands
+
+```bash
+# Apply new migrations after model changes
+python manage.py makemigrations && python manage.py migrate
+
+# Open the Django shell
+python manage.py shell
+
+# Access the admin panel
+# Navigate to http://localhost:8000/admin after creating a superuser
+```
+
+### Frontend commands
+
+```bash
+# Start dev server
+ng serve
+
+# Build for production
+ng build
+
+# Run unit tests
+ng test
+
+# Generate a new component
 ng generate component component-name
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
+## Project structure
+
+```
+Bossfight-Quiz/
+├── backend/          # Django REST API + WebSocket server
+│   ├── authentication/
+│   ├── boss/
+│   ├── config/       # Django settings & URL config
+│   ├── questions/
+│   ├── scores/
+│   ├── manage.py
+│   └── requirements.txt
+└── frontend/         # Angular SPA
+    ├── src/
+    ├── angular.json
+    └── package.json
 ```
 
-## Building
+---
 
-To build the project run:
+## Additional resources
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [Angular CLI documentation](https://angular.dev/tools/cli)
+- [Django documentation](https://docs.djangoproject.com/)
+- [Django Channels documentation](https://channels.readthedocs.io/)
