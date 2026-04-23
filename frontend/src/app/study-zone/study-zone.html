@@ -1,0 +1,73 @@
+<!-- Topic detail view -->
+@if (selected) {
+  <div class="page">
+    <header class="header">
+      <button class="back-btn" (click)="close()">&#8592; All Topics</button>
+      <span class="header-label">Study Zone</span>
+      <button class="back-btn" (click)="goHome()">&#8962; Home</button>
+    </header>
+
+    <div class="detail-body">
+      <div class="detail-hero">
+        <span class="detail-icon">{{ selected.icon }}</span>
+        <div>
+          <span class="tag {{ selected.tagColor }}">{{ selected.tag }}</span>
+          <h1 class="detail-title">{{ selected.title }}</h1>
+          <p class="detail-summary">{{ selected.summary }}</p>
+        </div>
+      </div>
+
+      <div class="sections">
+        @for (section of selected.sections; track section.heading) {
+          <div class="section">
+            <h2 class="section-heading">{{ section.heading }}</h2>
+            @if (section.body) {
+              <p class="section-body">{{ section.body }}</p>
+            }
+            @if (section.bullets) {
+              <ul class="bullet-list">
+                @for (bullet of section.bullets; track bullet) {
+                  <li>{{ bullet }}</li>
+                }
+              </ul>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Topic list view -->
+@if (!selected) {
+  <div class="page">
+    <header class="header">
+      <button class="back-btn" (click)="goHome()">&#8592; Home</button>
+      <span class="header-label">Study Zone</span>
+      <span></span>
+    </header>
+
+    <div class="list-body">
+      <div class="list-hero">
+        <h1 class="list-title">Know your enemy.</h1>
+        <p class="list-sub">Learn how attackers operate so you can spot and stop them.</p>
+      </div>
+
+      <div class="topic-grid">
+        @for (topic of topics; track topic.id) {
+          <button class="topic-card" (click)="open(topic)">
+            <span class="topic-icon">{{ topic.icon }}</span>
+            <div class="topic-info">
+              <div class="topic-top">
+                <span class="topic-title">{{ topic.title }}</span>
+                <span class="tag {{ topic.tagColor }}">{{ topic.tag }}</span>
+              </div>
+              <p class="topic-summary">{{ topic.summary }}</p>
+            </div>
+            <span class="topic-arrow">&#8594;</span>
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+}
