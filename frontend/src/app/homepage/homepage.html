@@ -31,8 +31,14 @@
                 </div>
                 <button mat-flat-button class="join-btn" (click)="goToBossBattle()">Join the Battle</button>
             </div>
-            <div class="hero-visual">
-                <div class="boss-icon">&#128128;</div>
+          <div class="hero-visual">
+            @if (bossHp>0) {
+              <div class="boss-icon">&#128126;</div>
+
+            } @else {
+              <div class="boss-icon">&#128128;</div>
+
+          }
             </div>
         </div>
     </section>
