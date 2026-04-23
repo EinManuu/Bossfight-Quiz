@@ -33,4 +33,12 @@ export class QuestionsService {
   getBossQuestions(): Observable<Question[]> {
     return this.http.get<Question[]>(`${environment.apiUrl}/boss/questions/`);
   }
+
+  createQuestion(data: Omit<Question, 'id'>): Observable<Question> {
+    return this.http.post<Question>(`${this.apiUrl}create/`, data);
+  }
+
+  deleteQuestion(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}${id}/`);
+  }
 }

@@ -1,25 +1,24 @@
 <div class="page">
-  <header class="header">
+  <!-- Header -->
+  <header class="panel-header">
     <button class="back-btn" (click)="goHome()">&#8592; Home</button>
-    <span class="header-label">Admin Panel</span>
+    <span class="panel-label">&#9881; Admin Panel</span>
+    <span></span>
   </header>
-<div class="app">
 
   <!-- Tabs -->
-  <div class="tabs">
-    <button [class]="tab==0?'active':''" (click)="tab=0">Questions</button>
-    <button [class]="tab==1?'active':''" (click)="tab=1">Boss</button>
-    <button [class]="tab==2?'active':''" (click)="tab=2">Leaderboard</button>
-    <button [class]="tab==3?'active':''" (click)="tab=3">Prices</button>
+  <div class="tab-bar">
+    <button class="tab-btn" [class.active]="tab === 0" (click)="tab = 0">&#10067; Questions</button>
+    <button class="tab-btn" [class.active]="tab === 1" (click)="tab = 1">&#128126; Boss</button>
   </div>
 
-  @if (tab==0) {
-    <app-create-questions></app-create-questions>
-  } @else if (tab==1) {
-  <app-create-boss></app-create-boss>
-}
-</div>
-  <div class="pages">
-
+  <!-- Content -->
+  <div class="panel-body">
+    @if (tab === 0) {
+      <app-create-questions></app-create-questions>
+    }
+    @if (tab === 1) {
+      <app-create-boss></app-create-boss>
+    }
   </div>
 </div>

@@ -40,6 +40,22 @@ def boss_state_view(request):
     return Response(_serialize_boss(boss))
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def boss_create_view(request):
+    name = request.data.get('name', '').strip()
+    if not name:
+        return Response({'error': 'Name is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    boss = Boss.objects.create(
+        name=name,
+        description=request.data.get('description', ''),
+        max_hp=int(request.data.get('maxHp', 10000)),
+        is_active=True,
+    )
+    return Response(_serialize_boss(boss), status=status.HTTP_201_CREATED)
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def boss_questions_view(request):

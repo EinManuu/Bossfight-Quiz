@@ -25,6 +25,10 @@ export class BossService {
     return this.http.patch<BossState>(`${this.apiUrl}/state/`, { currentHp });
   }
 
+  createBoss(data: { name: string; description: string; maxHp: number }): Observable<BossState> {
+    return this.http.post<BossState>(`${this.apiUrl}/create/`, data);
+  }
+
   connectWs(): Observable<number> {
     return new Observable(observer => {
       const ws = new WebSocket(`${environment.wsUrl}/boss/`);
