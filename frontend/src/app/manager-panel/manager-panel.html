@@ -1,1 +1,26 @@
-<p>manager-panel works!</p>
+<div class="page">
+  <header class="header">
+    <button class="back-btn" (click)="goHome()">&#8592; Home</button>
+    <span class="header-label">Admin Panel</span>
+  </header>
+
+<div class="app">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button [class]="window==0?'active':''" (click)="window=0">Questions</button>
+    <button [class]="window==1?'active':''" (click)="window=1">Boss</button>
+    <button [class]="window==2?'active':''" (click)="window=2">Leaderboard</button>
+    <button [class]="window==3?'active':''" (click)="window=3">Prices</button>
+  </div>
+
+  @if (window==0) {
+    <app-create-questions></app-create-questions>
+  } @else if (window==1) {
+  <app-create-boss></app-create-boss>
+}
+</div>
+  <div class="pages">
+
+  </div>
+</div>

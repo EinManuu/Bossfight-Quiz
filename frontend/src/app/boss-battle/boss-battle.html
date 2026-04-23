@@ -39,10 +39,16 @@
     <span class="event-label">&#128293; Boss Battle</span>
     <span class="q-counter">{{ current + 1 }} / {{ questions.length }}</span>
   </header>
+  
+  
+    <div class="boss-section">
+      @if (bossHp>0) {
+        <div class="boss-icon">&#128126;</div>
 
-  <!-- Boss section -->
-  <div class="boss-section">
-    <div class="boss-icon">&#128128;</div>
+      } @else {
+      <div class="boss-icon">&#128128;</div>
+
+    }
 
     @if (showDamage) {
     <div class="damage-pop" [class.heal]="isHeal">

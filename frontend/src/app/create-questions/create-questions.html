@@ -1,46 +1,34 @@
-<div class="app">
+<!-- Card -->
+<div class="card">
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="active">Questions</button>
-    <button>Boss</button>
-    <button>Leaderboard</button>
-    <button>Prices</button>
+  <!-- Image Upload -->
+  <div class="image-box">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*">
+
+    <img *ngIf="imagePreview" [src]="imagePreview" class="preview">
+
+    <div *ngIf="!imagePreview" class="placeholder">
+      Tap to upload image
+    </div>
   </div>
 
-  <!-- Card -->
-  <div class="card">
-
-    <!-- Image Upload -->
-    <div class="image-box">
-      <input type="file" (change)="onFileSelected($event)" accept="image/*">
-
-      <img *ngIf="imagePreview" [src]="imagePreview" class="preview">
-
-      <div *ngIf="!imagePreview" class="placeholder">
-        Tap to upload image
-      </div>
-    </div>
-
-    <!-- Question -->
-    <div class="section">
-      <label>Question</label>
-      <input type="text" placeholder="Enter your question">
-    </div>
-
-    <!-- Answers -->
-    <div class="section">
-      <label>Answers</label>
-
-      <div class="answer" *ngFor="let a of [1,2,3,4]">
-        <input type="checkbox">
-        <input type="text" placeholder="Option {{a}}">
-      </div>
-    </div>
-
-    <!-- Button -->
-    <button class="next-btn">Next</button>
-
+  <!-- Question -->
+  <div class="section">
+    <label>Question</label>
+    <input type="text" placeholder="Enter your question">
   </div>
+
+  <!-- Answers -->
+  <div class="section">
+    <label>Answers</label>
+
+    <div class="answer" *ngFor="let a of [1,2,3,4]">
+      <input type="checkbox">
+      <input type="text" placeholder="Option {{a}}">
+    </div>
+  </div>
+
+  <!-- Button -->
+  <button class="next-btn">Next</button>
 
 </div>

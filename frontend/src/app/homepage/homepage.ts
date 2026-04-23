@@ -65,4 +65,10 @@ export class Homepage implements OnInit {
   goToBossBattle() {
     this.router.navigate(['/boss-battle']);
   }
+
+  goToAdminPanel() {
+    this.router.navigate(['/admin-panel']);
+  }
+
+  protected readonly localStorage = localStorage;
 }

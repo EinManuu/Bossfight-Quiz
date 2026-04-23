@@ -1,13 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-create-questions',
-  imports: [NgForOf, NgIf],
-  templateUrl: './create-questions.html',
-  styleUrl: './create-questions.css',
+  selector: 'app-create-boss',
+  imports: [],
+  templateUrl: './create-boss.html',
+  styleUrl: './create-boss.css',
 })
-export class CreateQuestions {
+export class CreateBoss {
   imagePreview: string | ArrayBuffer | null = null;
 
   constructor(private cdr: ChangeDetectorRef) {}
@@ -31,4 +30,3 @@ export class CreateQuestions {
     reader.readAsDataURL(file);
   }
 }
-
