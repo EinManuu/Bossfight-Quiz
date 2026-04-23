@@ -28,9 +28,9 @@ export class AuthService {
       );
   }
 
-  register(username: string): Observable<LoginResponse> {
+  register(username: string, role: 'IT' | 'Finance'): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/register/`, { username })
+      .post<LoginResponse>(`${this.apiUrl}/register/`, { username, role })
       .pipe(
         tap((res) => {
           localStorage.setItem('token', res.access);

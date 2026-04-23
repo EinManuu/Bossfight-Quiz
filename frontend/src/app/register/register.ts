@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class Register {
   username = '';
+  role: 'IT' | 'Finance' = 'IT';
   message = '';
   error = '';
 
@@ -26,7 +27,12 @@ export class Register {
       return;
     }
 
-    this.authService.register(username).subscribe({
+    if (!['IT', 'Finance'].includes(this.role)) {
+      this.error = 'Please select a valid department.';
+      return;
+    }
+
+    this.authService.register(username, this.role).subscribe({
       next: () => {
         this.router.navigate(['/home']);
       },
