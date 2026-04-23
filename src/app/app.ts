@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CreateQuestions } from './create-questions/create-questions';
 
@@ -8,6 +8,4 @@ import { CreateQuestions } from './create-questions/create-questions';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
-  protected readonly title = signal('Bossfight-Quiz');
-}
+export class App {}
