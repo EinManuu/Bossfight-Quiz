@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -9,13 +9,17 @@ import { AuthService } from '../auth.service';
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export class Register {
+export class Register implements OnInit {
   username = '';
   role: 'IT' | 'Finance' = 'IT';
   message = '';
   error = '';
 
   constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.logout();
+  }
 
   onRegister() {
     this.message = '';

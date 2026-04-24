@@ -21,10 +21,14 @@ export class AuthService {
       .post<LoginResponse>(`${this.apiUrl}/login/`, { username, password })
       .pipe(
         tap((res) => {
-          localStorage.setItem('token', res.access);
-          localStorage.setItem('loggedIn', 'true');
-          localStorage.setItem('role', res.role);
-          localStorage.setItem('username', res.username);
+          try {
+            localStorage.setItem('token', res.access);
+            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('role', res.role);
+            localStorage.setItem('username', res.username);
+          } catch {
+            // Storage blocked (private mode, strict privacy settings) — session won't persist
+          }
         })
       );
   }
@@ -34,10 +38,14 @@ export class AuthService {
       .post<LoginResponse>(`${this.apiUrl}/register/`, { username, role })
       .pipe(
         tap((res) => {
-          localStorage.setItem('token', res.access);
-          localStorage.setItem('loggedIn', 'true');
-          localStorage.setItem('role', res.role);
-          localStorage.setItem('username', res.username);
+          try {
+            localStorage.setItem('token', res.access);
+            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('role', res.role);
+            localStorage.setItem('username', res.username);
+          } catch {
+            // Storage blocked (private mode, strict privacy settings) — session won't persist
+          }
         })
       );
   }
